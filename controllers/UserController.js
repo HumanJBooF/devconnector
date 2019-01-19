@@ -2,11 +2,11 @@ const User = require('../models/User');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const signToken = require('../config/jwt');
-const validateRegisterInput = require('../validation/register')
+const validate = require('../validation/')
 
 const UserController = {
     findOne: (req, res) => {
-        const { errors, isValid } = validateRegisterInput(req.body);
+        const { errors, isValid } = validate.registerInput(req.body);
 
         // Check Validation
         if (!isValid) {
@@ -43,14 +43,22 @@ const UserController = {
     },
 
     login: (req, res) => {
-        const { email, password } = req.body;
 
+        const { errors, isValid } = validate.loginInput(req.body);
+
+        // Check Validation
+        if (!isValid) {
+            return res.status(400).json(errors);
+        }
+
+        const { email, password } = req.body;
         // find user by email
         User.findOne({ email })
             .then(user => {
                 // check for user
                 if (!user) {
-                    return res.status(404).json({ email: `User ${email} not found` });
+                    errors.email = `User ${email} not found`
+                    return res.status(404).json(errors);
                 }
 
                 // check password
@@ -63,7 +71,8 @@ const UserController = {
                             // Function from config/jwt
                             signToken(payload, res)
                         } else {
-                            res.status(400).json({ password: `Password Incorrect` });
+                            errors.password = 'Password Incorrect'
+                            res.status(400).json(errors);
                         }
 
                     })
