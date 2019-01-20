@@ -1,10 +1,13 @@
 const User = require('../models/User');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
-const signToken = require('../config/jwt');
-const validate = require('../validation/')
+const signToken = require('../config/jwt'); // Load keys
+const validate = require('../validation/'); // Load validation
 
 const UserController = {
+    // @route   POST api/users/register
+    // @desc    Register user
+    // @access  Public
     findOne: (req, res) => {
         const { errors, isValid } = validate.registerInput(req.body);
 
@@ -20,7 +23,7 @@ const UserController = {
                     errors.email = `Email already exist`
                     return res.status(400).json(errors);
                 } else {
-                    const avatar = gravatar.url(email, { s: '200', r: 'r', default: 'mm' });
+                    const avatar = gravatar.url(email, { s: '200', r: 'r', default: 'mm' }); // Size, Rating, Default
                     const newUser = new User({
                         name: name,
                         email: email,
@@ -41,7 +44,9 @@ const UserController = {
                 };
             });
     },
-
+    // @route   GET api/users/login
+    // @desc    Login User / Returning JWT Token
+    // @access  Public
     login: (req, res) => {
 
         const { errors, isValid } = validate.loginInput(req.body);
@@ -52,16 +57,16 @@ const UserController = {
         }
 
         const { email, password } = req.body;
-        // find user by email
+        // Find user by email
         User.findOne({ email })
             .then(user => {
-                // check for user
+                // Check for user
                 if (!user) {
                     errors.email = `User ${email} not found`
                     return res.status(404).json(errors);
                 }
 
-                // check password
+                // Check password
                 bcrypt.compare(password, user.password)
                     .then(isMatch => {
                         if (isMatch) {
@@ -78,7 +83,13 @@ const UserController = {
                     })
             })
     },
-
+    // @route   GET api/users/current
+    // @desc    Return current user
+    // @access  Private
+    current: (req, res) => {
+        res.json({ id: req.user.id, name: req.user.name, email: req.user.email })
+    },
+    // Get current user
     getCurrent: (jwt_payload, done) => {
         User.findById(jwt_payload.id)
             .then(user => {

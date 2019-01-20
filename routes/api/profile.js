@@ -1,5 +1,6 @@
 const router = require('express').Router();
+const ProfileController = require('../../controllers').profile;
 
-router.get('/test', (req, res) => res.json({ msg: 'Profile Works' }));
+// All routes start with /api/profile
 
 module.exports = router;
