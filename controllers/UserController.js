@@ -87,7 +87,8 @@ const UserController = {
     // @desc    Return current user
     // @access  Private
     current: (req, res) => {
-        res.json({ id: req.user.id, name: req.user.name, email: req.user.email })
+        const { id, name, email } = req.user;
+        res.json({ id: id, name: name, email: email });
     },
     // Get current user
     getCurrent: (jwt_payload, done) => {
