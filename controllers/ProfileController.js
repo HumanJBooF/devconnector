@@ -1,6 +1,6 @@
 const Profile = require('../models/Profile');
 const User = require('../models/User');
-const validate = require('../validation');
+const validate = require('../validation'); // Load validations
 
 const ProfileController = {
     // @desc Get current users profile

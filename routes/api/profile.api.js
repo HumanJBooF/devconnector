@@ -2,7 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 const ProfileController = require('../../controllers').profile;
 
-// @route All routes start with /api/profile
+// @routes All routes start at /api/profile
 // @access Private
 router.route('/').get(passport.authenticate('jwt', { session: false }), ProfileController.findOne);
 router.route('/').post(passport.authenticate('jwt', { session: false }), ProfileController.getFields);

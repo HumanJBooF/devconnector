@@ -1,13 +1,15 @@
-const validateRegisterInput = require('./register');
-const validateLoginInput = require('./login');
-const validateProfileInput = require('./profile');
-const validateExperienceInput = require('./experience');
-const validateEducationInput = require('./education');
+const validateRegisterInput = require('./register.validate');
+const validateLoginInput = require('./login.validate');
+const validateProfileInput = require('./profile.validate');
+const validateExperienceInput = require('./experience.validate');
+const validateEducationInput = require('./education.validate');
+const validatePostInput = require('./post.validate')
 
 module.exports = {
     registerInput: validateRegisterInput,
     loginInput: validateLoginInput,
     profileInput: validateProfileInput,
     experienceInput: validateExperienceInput,
-    educationInput: validateEducationInput
+    educationInput: validateEducationInput,
+    postInput: validatePostInput
 };
