@@ -25,7 +25,8 @@ mongoose
 app.use(passport.initialize());
 
 // Passport Config
-require('./config/passport')(passport);
+const useJWT = require('./config/passport');
+useJWT(passport);
 
 // Routes
 app.use('/', routes);

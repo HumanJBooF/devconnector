@@ -4,17 +4,17 @@ const ProfileController = require('../../controllers').profile;
 
 // @routes All routes start at /api/profile
 // @access Private
-router.route('/').get(passport.authenticate('jwt', { session: false }), ProfileController.findOne);
-router.route('/').post(passport.authenticate('jwt', { session: false }), ProfileController.getFields);
-router.route('/experience').post(passport.authenticate('jwt', { session: false }), ProfileController.addExperience);
-router.route('/education').post(passport.authenticate('jwt', { session: false }), ProfileController.addEducation);
-router.route('/experience/:exp_id').delete(passport.authenticate('jwt', { session: false }), ProfileController.deleteExp);
-router.route('/education/:edu_id').delete(passport.authenticate('jwt', { session: false }), ProfileController.deleteEdu);
-router.route('/').delete(passport.authenticate('jwt', { session: false }), ProfileController.deleteUserandProfile);
+router.get('/', passport.authenticate('jwt', { session: false }), ProfileController.findOne);
+router.post('/', passport.authenticate('jwt', { session: false }), ProfileController.getFields);
+router.post('/experience', passport.authenticate('jwt', { session: false }), ProfileController.addExperience);
+router.post('/education', passport.authenticate('jwt', { session: false }), ProfileController.addEducation);
+router.delete('/experience/:exp_id', passport.authenticate('jwt', { session: false }), ProfileController.deleteExp);
+router.delete('/education/:edu_id', passport.authenticate('jwt', { session: false }), ProfileController.deleteEdu);
+router.delete('/', passport.authenticate('jwt', { session: false }), ProfileController.deleteUserandProfile);
 
 // @access Public
-router.route('/handle/:handle').get(ProfileController.getByHandle);
-router.route('/user/:user_id').get(ProfileController.getById);
-router.route('/all').get(ProfileController.getAllProfiles);
+router.get('/handle/:handle', ProfileController.getByHandle);
+router.get('/user/:user_id', ProfileController.getById);
+router.get('/all', ProfileController.getAllProfiles);
 
 module.exports = router;

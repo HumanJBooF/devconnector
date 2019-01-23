@@ -4,11 +4,11 @@ const passport = require('passport');
 
 // @routes all routes start at /api/users
 // @access Private
-router.route('/current').get(passport.authenticate('jwt', { session: false }), userController.current);
+router.get('/current', passport.authenticate('jwt', { session: false }), userController.current);
 
 // @access Public
-router.route('/register').post(userController.findOne);
-router.route('/login').post(userController.login);
+router.post('/register', userController.findOne);
+router.post('/login', userController.login);
 
 
 
