@@ -2,7 +2,7 @@ const Post = require('../models/Post');
 const validate = require('../validation');
 
 const PostController = {
-
+    // @route GET /api/posts
     // @desc Get posts
     // @access Public
     getPosts: (req, res) => {
@@ -11,7 +11,7 @@ const PostController = {
             .then(posts => res.json(posts))
             .catch(err => res.status(404).json({ noPosts: 'No posts have been found!' }));
     },
-
+    // @route GET /api/posts/:id
     // @desc Get post by id
     // @access Get public
     getPostByID: (req, res) => {
@@ -20,7 +20,7 @@ const PostController = {
             .then(post => res.json(post))
             .catch(err => res.status(404).json({ noPost: 'No post found with that id!' }));
     },
-
+    // @route POST /api/posts/
     // @desc Create post
     // @access Private
     createPost: (req, res) => {
@@ -36,7 +36,7 @@ const PostController = {
         });
         newPost.save().then(post => res.json(post))
     },
-
+    // @route DELETE /api/posts/:id
     // @desc Delete post by id
     // @Private
     deletePost: (req, res) => {
@@ -49,7 +49,7 @@ const PostController = {
                 post.remove().then(() => res.json({ success: true }))
             }).catch(err => res.status(404).err({ noPost: 'No post was found!' }));
     },
-
+    // @route POST /api/posts/like/:id
     // @desc Like post
     // @access Private
     likePost: (req, res) => {
@@ -66,7 +66,7 @@ const PostController = {
             })
             .catch(err => res.status(404).json({ noPost: 'No post found to like!' }));
     },
-
+    // @route POST /api/posts/unlike/:id
     // @desc Unlike post
     // @access Private
     unlikePost: (req, res) => {
@@ -90,7 +90,7 @@ const PostController = {
             })
             .catch(err => res.status(404).json({ noPost: 'No post found!' }));
     },
-
+    // @route POST /api/posts/comment/:id
     // @desc Add comment to post
     // @access Private
     addComment: (req, res) => {
@@ -110,7 +110,7 @@ const PostController = {
             })
             .catch(err => res.status(404).json({ noPost: 'Post not found!' }));
     },
-
+    // @route DELETE /api/posts/comment/:id/:comment_id
     // @desc Delete comment
     // @access Private
     deleteComment: (req, res) => {

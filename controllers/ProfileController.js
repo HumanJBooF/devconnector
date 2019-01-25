@@ -3,6 +3,7 @@ const User = require('../models/User');
 const validate = require('../validation'); // Load validations
 
 const ProfileController = {
+    // @route GET /api/profile/
     // @desc Get current users profile
     // @access Private
     findOne: (req, res) => {
@@ -19,7 +20,7 @@ const ProfileController = {
             })
             .catch(err => res.status(404).json(err));
     },
-
+    //@route POST /api/profile
     // @desc Create or edit user profile
     // @access Private
     getFields: (req, res) => {
@@ -75,7 +76,7 @@ const ProfileController = {
                 }
             })
     },
-
+    // @route GET /api/profile/all
     // @desc Get all profiles
     // @access Public
     getAllProfiles: (req, res) => {
@@ -90,7 +91,7 @@ const ProfileController = {
                 res.json(profiles)
             }).catch(err => res.status(404).json({ profiles: 'There are no profiles' }))
     },
-
+    // @route GET /api/profile/handle/:handle
     // @desc Get profile by handle
     // @access Public
     getByHandle: (req, res) => {
@@ -107,7 +108,7 @@ const ProfileController = {
                 res.json(profile);
             }).catch(err => res.status(404).json(err));
     },
-
+    // @route GET /api/profile/user/:user_id
     // @desc Get profile by user ID
     // @access Public
     getById: (req, res) => {
@@ -117,7 +118,7 @@ const ProfileController = {
             .then(profile => res.json(profile))
             .catch(err => res.status(404).json({ profile: 'There is no profile for this user' }));
     },
-
+    // @route POST /api/profile/experience
     // @desc Add experience to profile
     // @access Private
     addExperience: (req, res) => {
@@ -140,7 +141,7 @@ const ProfileController = {
                     .catch(err => res.json(err));
             });
     },
-
+    // @route POST /api/profile/education
     // @desc Add education to profile
     // @access Private
     addEducation: (req, res) => {
@@ -163,7 +164,7 @@ const ProfileController = {
                     .catch(err => res.json(err));
             });
     },
-
+    // @route DELETE /api/profile/experience/:exp_id
     // @desc Delete experience from profile
     // @access Private
     deleteExp: (req, res) => {
@@ -181,7 +182,7 @@ const ProfileController = {
                 profile.save().then(profile => res.json(profile))
             }).catch(err => res.status(404).json(err));
     },
-
+    // @route DELETE /api/profile/education/:edu_id
     // @desc Delete education from profile
     // @access Private
     deleteEdu: (req, res) => {
@@ -199,7 +200,7 @@ const ProfileController = {
                 profile.save().then(profile => res.json(profile))
             }).catch(err => res.status(404).json(err));
     },
-
+    // @route DELETE /api/profile/
     // @desc Delete user and profile
     // @access Private
     deleteUserandProfile: (req, res) => {

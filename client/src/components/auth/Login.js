@@ -1,4 +1,5 @@
 import React from 'react'
+import API from '../../utils';
 
 class Login extends React.Component {
     state = {
@@ -19,7 +20,9 @@ class Login extends React.Component {
 
         const user = { email, password }
 
-
+        API.loginUser(user)
+            .then(res => console.log(res.data))
+            .catch(err => this.setState({ errors: err.response.data }))
     }
 
     render () {
