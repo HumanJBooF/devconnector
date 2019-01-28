@@ -26,7 +26,7 @@ const UserController = {
                     const avatar = gravatar.url(email, { s: '200', r: 'r', default: 'mm' }); // Size, Rating, Default
                     const newUser = new User({
                         name: name,
-                        email: email,
+                        email: email.toLowerCase(),
                         avatar,
                         password: password
                     });
@@ -58,7 +58,7 @@ const UserController = {
 
         const { email, password } = req.body;
         // Find user by email
-        User.findOne({ email })
+        User.findOne({ email: email.toLowerCase() })
             .then(user => {
                 // Check for user
                 if (!user) {

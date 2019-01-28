@@ -1,5 +1,7 @@
 import React from 'react';
-import API from '../../utils';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/authActions';
 
 class Register extends React.Component {
     state = {
@@ -10,25 +12,43 @@ class Register extends React.Component {
         errors: {}
     }
 
+    componentDidMount = () => {
+        const { history, auth: { isAuthenticated } } = this.props;
+
+        return isAuthenticated
+            ? history.push('/dashboard')
+            : null;
+    }
+
+    static getDerivedStateFromProps = (nextProps, prevProps) => {
+        return nextProps.errors !== prevProps.errors
+            ? { errors: nextProps.errors }
+            : null;
+    }
+
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevProps.errors !== prevState.errors) {
+            this.setState({ errors: prevProps.errors });
+        }
+    }
+
     handleChange = event => {
         const { name, value } = event.target;
-        this.setState({
-            [name]: value
-        })
+        this.setState({ [name]: value });
     }
 
     handleSubmit = event => {
         event.preventDefault();
         const { name, email, password, password2 } = this.state;
+        const { registerUser, history } = this.props;
         const newUser = { name, email, password, password2 };
 
-        API.registerUser(newUser)
-            .then(res => console.log(res.data))
-            .catch(err => this.setState({ errors: err.response.data }));
+        registerUser(newUser, history);
     }
 
     render () {
         const { errors } = this.state;
+
         return (
             <div className="register">
                 <div className="container">
@@ -114,4 +134,15 @@ class Register extends React.Component {
     }
 }
 
-export default Register
+Register.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+})
+
+export default connect(mapStateToProps, { registerUser })(Register);

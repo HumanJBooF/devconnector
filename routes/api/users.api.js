@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const userController = require('../../controllers').user;
 const passport = require('passport');
+const userController = require('../../controllers').user;
 
 // @routes all routes start at /api/users
 // @access Private
