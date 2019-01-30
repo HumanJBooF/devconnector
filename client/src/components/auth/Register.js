@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
+import TextFieldGroup from '../common/textFieldGroup';
 
 class Register extends React.Component {
     state = {
@@ -54,76 +55,46 @@ class Register extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Sign Up</h1>
-                            <p className="lead text-center">Create your DevConnector account</p>
+                            <h1 className="display-4 text-center">
+                                Sign Up
+                            </h1>
+                            <p className="lead text-center">
+                                Create your DevConnector account
+                            </p>
                             <form onSubmit={this.handleSubmit}>
-                                <div className="form-group">
-                                    <input
-                                        type="text"
-                                        className={
-                                            errors.name
-                                                ? "form-control form-control-lg is-invalid"
-                                                : "form-control form-control-lg"}
-                                        placeholder="Name"
-                                        name="name"
-                                        value={this.state.name}
-                                        onChange={this.handleChange}
-                                    />
-                                    <div className="invalid-feedback">
-                                        {errors.name}
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <input
-                                        type="email"
-                                        className={
-                                            errors.email
-                                                ? "form-control form-control-lg is-invalid"
-                                                : "form-control form-control-lg"}
-                                        placeholder="Email Address"
-                                        name="email"
-                                        value={this.state.email}
-                                        onChange={this.handleChange}
-                                    />
-                                    <small className="form-text text-muted">
-                                        This site uses Gravatar so if you want a profile image, use a Gravatar email
-                                    </small>
-                                    <div className="invalid-feedback">
-                                        {errors.email}
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <input
-                                        type="password"
-                                        className={
-                                            errors.password
-                                                ? "form-control form-control-lg is-invalid"
-                                                : "form-control form-control-lg"}
-                                        placeholder="Password"
-                                        name="password"
-                                        value={this.state.password}
-                                        onChange={this.handleChange}
-                                    />
-                                    <div className="invalid-feedback">
-                                        {errors.password}
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <input
-                                        type="password"
-                                        className={
-                                            errors.password2
-                                                ? "form-control form-control-lg is-invalid"
-                                                : "form-control form-control-lg"}
-                                        placeholder="Confirm Password"
-                                        name="password2"
-                                        value={this.state.password2}
-                                        onChange={this.handleChange}
-                                    />
-                                    <div className="invalid-feedback">
-                                        {errors.password2}
-                                    </div>
-                                </div>
+                                <TextFieldGroup
+                                    type="text"
+                                    name="name"
+                                    placeholder="Name"
+                                    value={this.state.name}
+                                    onChange={this.handleChange}
+                                    error={errors.name}
+                                />
+                                <TextFieldGroup
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email Address"
+                                    value={this.state.email}
+                                    onChange={this.handleChange}
+                                    error={errors.email}
+                                    info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                                />
+                                <TextFieldGroup
+                                    type="password"
+                                    name="password"
+                                    placeholder="Enter a password"
+                                    value={this.state.password}
+                                    onChange={this.handleChange}
+                                    error={errors.password}
+                                />
+                                <TextFieldGroup
+                                    type="password2"
+                                    name="password2"
+                                    placeholder="Confirm Password"
+                                    value={this.state.password2}
+                                    onChange={this.handleChange}
+                                    error={errors.password2}
+                                />
                                 <input type="submit" className="btn btn-info btn-block mt-4" />
                             </form>
                         </div>

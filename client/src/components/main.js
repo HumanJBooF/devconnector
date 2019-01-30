@@ -3,12 +3,14 @@ import { Route } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import API from '../utils/api.controller';
 import { setCurrentUser, logoutUser } from '../actions/authActions';
+import { clearProfile } from '../actions/profileActions';
 import store from '../store';
 import Navbar from './layout/Navbar';
 import Landing from './layout/Landing';
 import Footer from './layout/Footer';
 import Login from './auth/Login';
 import Register from './auth/Register';
+import Dashboard from './dashboard/Dashboard';
 
 if (localStorage.jwtToken) {
     // Keep user logged in
@@ -18,7 +20,8 @@ if (localStorage.jwtToken) {
     // Check for expired token
     const currentTime = Date.now() / 1000;
     if (decoded.exp < currentTime) {
-        store.dispatch(logoutUser);
+        store.dispatch(logoutUser());
+        store.dispatch(clearProfile());
         window.location.href = '/login';
     }
 }
@@ -32,6 +35,7 @@ class Main extends React.Component {
                 <div className="container">
                     <Route exact path='/register' component={Register} />
                     <Route exact path='/Login' component={Login} />
+                    <Route exact path='/dashboard' component={Dashboard} />
                 </div>
                 <Footer />
             </div>

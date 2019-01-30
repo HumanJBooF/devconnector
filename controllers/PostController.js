@@ -56,7 +56,10 @@ const PostController = {
         const { id } = req.params;
         Post.findById(id)
             .then(post => {
-                const checkLike = post.likes.filter(like => like.user.toString() === req.user.id).length > 0;
+                const checkLike = post.likes.filter(like => {
+                    return like.user.toString() === req.user.id
+                }).length > 0;
+
                 if (checkLike) {
                     return res.status(400).json({ liked: 'User already liked this post!' })
                 }

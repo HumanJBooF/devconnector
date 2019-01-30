@@ -3,10 +3,12 @@ import API from '../utils/api.controller';
 import types from './types';
 import jwt_decode from 'jwt-decode';
 
+const { GET_ERRORS, SET_CURRENT_USER } = types;
+
 const registerUser = (userData, history) => dispatch => {
     API.registerUser(userData)
         .then(res => history.push('/login'))
-        .catch(err => dispatch({ type: types.GET_ERRORS, payload: err.response.data }));
+        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 }
 
 const loginUser = userData => dispatch => {
@@ -20,12 +22,12 @@ const loginUser = userData => dispatch => {
 
             dispatch(setCurrentUser(decoded));
         })
-        .catch(err => dispatch({ type: types.GET_ERRORS, payload: err.response.data }));
+        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 }
 
 const setCurrentUser = decoded => {
     return {
-        type: types.SET_CURRENT_USER,
+        type: SET_CURRENT_USER,
         payload: decoded
     };
 }

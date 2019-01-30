@@ -26,7 +26,7 @@ const UserController = {
                     const avatar = gravatar.url(email, { s: '200', r: 'r', default: 'mm' }); // Size, Rating, Default
                     const newUser = new User({
                         name: name,
-                        email: email.toLowerCase(),
+                        email: email,
                         avatar,
                         password: password
                     });
@@ -58,11 +58,11 @@ const UserController = {
 
         const { email, password } = req.body;
         // Find user by email
-        User.findOne({ email: email.toLowerCase() })
+        User.findOne({ email: email })
             .then(user => {
                 // Check for user
                 if (!user) {
-                    errors.email = `User ${email} not found`
+                    errors.email = `User ${email} not found`;
                     return res.status(404).json(errors);
                 }
 
@@ -72,11 +72,15 @@ const UserController = {
                         if (isMatch) {
                             // User Matched
                             // Create JWT Payload
-                            const payload = { id: user.id, name: user.name, avatar: user.avatar }
+                            const payload = {
+                                id: user.id,
+                                name: user.name,
+                                avatar: user.avatar
+                            }
                             // Function from config/jwt
                             signToken(payload, res)
                         } else {
-                            errors.password = 'Password Incorrect'
+                            errors.password = 'Incorrect user/password combination';
                             res.status(400).json(errors);
                         }
 

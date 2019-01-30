@@ -1,14 +1,16 @@
 import types from '../actions/types';
 import isEmpty from '../validation/is-empty';
 
+const { SET_CURRENT_USER } = types;
+
 const initialState = {
     isAuthenticated: false,
     user: {}
 }
 
-const State = (state = initialState, action) => {
+const authState = (state = initialState, action) => {
     switch (action.type) {
-        case types.SET_CURRENT_USER:
+        case SET_CURRENT_USER:
             return {
                 ...state,
                 isAuthenticated: !isEmpty(action.payload),
@@ -19,4 +21,4 @@ const State = (state = initialState, action) => {
     }
 }
 
-export default State;
+export default authState;
