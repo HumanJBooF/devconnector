@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-const TextFieldGroup = props => {
-    const { type, error, placeholder, name, value, onChange, info } = props;
+const TextFieldGroup = ({ type, error, placeholder, name, value, onChange, info }) => {
     return (
         <div>
             <div className="form-group">

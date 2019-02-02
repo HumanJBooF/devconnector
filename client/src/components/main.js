@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import API from '../utils/api.controller';
 import { setCurrentUser, logoutUser } from '../actions/authActions';
@@ -11,6 +11,7 @@ import Footer from './layout/Footer';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import Dashboard from './dashboard/Dashboard';
+import PrivateRoute from '../components/common/PrivateRoute';
 
 if (localStorage.jwtToken) {
     // Keep user logged in
@@ -35,7 +36,9 @@ class Main extends React.Component {
                 <div className="container">
                     <Route exact path='/register' component={Register} />
                     <Route exact path='/Login' component={Login} />
-                    <Route exact path='/dashboard' component={Dashboard} />
+                    <Switch>
+                        <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                    </Switch>
                 </div>
                 <Footer />
             </div>
