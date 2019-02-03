@@ -11,6 +11,7 @@ import Footer from './layout/Footer';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import Dashboard from './dashboard/Dashboard';
+import CreateProfile from './create-profile/CreateProfile';
 import PrivateRoute from '../components/common/PrivateRoute';
 
 if (localStorage.jwtToken) {
@@ -38,6 +39,7 @@ class Main extends React.Component {
                     <Route exact path='/Login' component={Login} />
                     <Switch>
                         <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                        <PrivateRoute exact path='/create-profile' component={CreateProfile} />
                     </Switch>
                 </div>
                 <Footer />
