@@ -5,6 +5,7 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaField from '../common/TextAreaField';
 import InputGroup from '../common/InputGroup';
 import SelectList from '../common/SelectList';
+import info from './info';
 
 class CreateProfile extends React.Component {
     state = {
@@ -35,10 +36,8 @@ class CreateProfile extends React.Component {
 
 
     render () {
-
-        const { displaySocial, 
-                errors: { handle, status, company, website, skills, github, 
-                    bio, location, twitter, facebook, linkedin, youtube, instagram } } = this.state;
+        const { textField, inputField } = info;
+        const { displaySocial, errors } = this.state;
 
         const options = [
             { label: '* Select Professional Status', value: 0 },
@@ -72,7 +71,7 @@ class CreateProfile extends React.Component {
                                     placeholder="* Profile Handle"
                                     value={this.state.handle}
                                     onChange={this.handleChange}
-                                    error={handle}
+                                    error={errors.handle}
                                     info="Create a unique username/handle so you can be found by friends and other developers"
                                 />
                                 <SelectList
@@ -80,123 +79,51 @@ class CreateProfile extends React.Component {
                                     name="status"
                                     value={this.state.status}
                                     onChange={this.handleChange}
-                                    error={status}
+                                    error={errors.status}
                                     info="Job Title"
                                     options={options}
                                 />
-  <TextFieldGroup
-                  placeholder="Company"
-                  name="company"
-                  value={this.state.company}
-                  onChange={this.onChange}
-                  error={company}
-                  info="Could be your own company or one you work for"
-                />
-                <TextFieldGroup
-                  placeholder="Website"
-                  name="website"
-                  value={this.state.website}
-                  onChange={this.onChange}
-                  error={website}
-                  info="Could be your own website or a company one"
-                />
-                <TextFieldGroup
-                  placeholder="Location"
-                  name="location"
-                  value={this.state.location}
-                  onChange={this.onChange}
-                  error={location}
-                  info="City or city & state suggested (eg. Boston, MA)"
-                />
-                <TextFieldGroup
-                  placeholder="* Skills"
-                  name="skills"
-                  value={this.state.skills}
-                  onChange={this.onChange}
-                  error={skills}
-                  info="Please use comma separated values (eg.
-                    HTML,CSS,JavaScript,PHP)"
-                />
-                <TextFieldGroup
-                  placeholder="Github Username"
-                  name="githubusername"
-                  value={this.state.githubusername}
-                  onChange={this.onChange}
-                  error={github}
-                  info="If you want your latest repos and a Github link, include your username"
-                />
-                <TextAreaField
-                  placeholder="Short Bio"
-                  name="bio"
-                  value={this.state.bio}
-                  onChange={this.onChange}
-                  error={bio}
-                  info="Tell us a little about yourself"
-                />
-                <div className="mb-3">
-                <button type="button" 
-                        className="btn btn-light" 
-                        onClick={() => {
-                            this.setState(prevState => ({
-                                displaySocial: !prevState.displaySocial
-                            }));
-                }}>Add Social Network Links
-                </button>
-                <span className="text-muted">Optional</span>
-                    </div>
-                    {displaySocial && 
-                                    <div>
-                                        <InputGroup
-                                            placeholder="Twitter Profile URL"
-                                            name="twitter"
-                                            icon="fab fa-twitter"
-                                            value={this.state.twitter}
-                                            onChange={this.handleChange}
-                                            error={twitter}
-                                        />
+                                {textField.map(obj =>
+                                    <TextFieldGroup
+                                        key={obj.name}
+                                        placeholder={obj.placeholder}
+                                        name={obj.name}
+                                        value={this.state[obj.name]}
+                                        onChange={this.handleChange}
+                                        info={obj.info}
+                                        error={errors[obj.name]}
+                                    />
+                                )}
 
-                                        <InputGroup
-                                            placeholder="Facebook Page URL"
-                                            name="facebook"
-                                            icon="fab fa-facebook"
-                                            value={this.state.facebook}
-                                            onChange={this.handleChange}
-                                            error={facebook}
-                                        />
-
-                                        <InputGroup
-                                            placeholder="Linkedin Profile URL"
-                                            name="linkedin"
-                                            icon="fab fa-linkedin"
-                                            value={this.state.linkedin}
-                                            onChange={this.handleChange}
-                                            error={linkedin}
-                                        />
-
-                                        <InputGroup
-                                            placeholder="YouTube Channel URL"
-                                            name="youtube"
-                                            icon="fab fa-youtube"
-                                            value={this.state.youtube}
-                                            onChange={this.handleChange}
-                                            error={youtube}
-                                        />
-
-                                        <InputGroup
-                                            placeholder="Instagram Page URL"
-                                            name="instagram"
-                                            icon="fab fa-instagram"
-                                            value={this.state.instagram}
-                                            onChange={this.handleChange}
-                                            error={instagram}
-                                        />
-                                    </div>
-                    }
-                <input
-                type="submit"
-                value="Submit"
-                className="btn btn-info btn-block mt-4"
-                />
+                                <div className="mb-3">
+                                    <button type="button"
+                                        className="btn btn-light"
+                                        onClick={() => {
+                                            this.setState(prevState => ({
+                                                displaySocial: !prevState.displaySocial
+                                            }));
+                                        }}>Add Social Network Links</button>
+                                    <span className="text-muted">Optional</span>
+                                </div>
+                                {displaySocial &&
+                                    <>
+                                        {inputField.map(obj =>
+                                            <InputGroup
+                                                placeholder={obj.placeholder}
+                                                name={obj.name}
+                                                icon={obj.icon}
+                                                value={this.state[obj.name]}
+                                                onChange={this.handleChange}
+                                                error={errors[obj.name]}
+                                            />
+                                        )}
+                                    </>
+                                }
+                                <input
+                                    type="submit"
+                                    value="Submit"
+                                    className="btn btn-info btn-block mt-4"
+                                />
                             </form>
                         </div>
                     </div>
