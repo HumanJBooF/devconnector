@@ -94,7 +94,14 @@ class CreateProfile extends React.Component {
                                         error={errors[obj.name]}
                                     />
                                 )}
-
+                                <TextAreaFieldGroup
+                                    placeholder="Short Bio"
+                                    name="bio"
+                                    value={this.state.bio}
+                                    onChange={this.handleChange}
+                                    error={errors.bio}
+                                    info="Tell us a little about yourself"
+                                />
                                 <div className="mb-3">
                                     <button type="button"
                                         className="btn btn-light"
