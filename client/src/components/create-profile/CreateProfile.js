@@ -94,7 +94,7 @@ class CreateProfile extends React.Component {
                                         error={errors[obj.name]}
                                     />
                                 )}
-                                <TextAreaFieldGroup
+                                <TextAreaField
                                     placeholder="Short Bio"
                                     name="bio"
                                     value={this.state.bio}
