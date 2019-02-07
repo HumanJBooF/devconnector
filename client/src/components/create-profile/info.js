@@ -24,11 +24,6 @@ const info = {
             placeholder: 'Github Username',
             name: 'github',
             info: 'If you want your latest repos and a Github link, include your username'
-        },
-        {
-            placeholder: 'Short Bio',
-            name: 'bio',
-            info: 'Tell us a little about yourself'
         }
     ],
     inputField: [
@@ -57,6 +52,17 @@ const info = {
             name: 'instagram',
             icon: 'fab fa-instagram'
         },
+    ],
+    options: [
+        { label: '* Select Professional Status', value: 0 },
+        { label: 'Developer', value: 'Developer' },
+        { label: 'Junior Developer', value: 'Junior Developer' },
+        { label: 'Senior Developer', value: 'Senior Developer' },
+        { label: 'Manager', value: 'Manager' },
+        { label: 'Student or Learning', value: 'Student or Learning' },
+        { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
+        { label: 'Intern', value: 'Intern' },
+        { label: 'Other', value: 'Other' }
     ]
 }
 

@@ -10,13 +10,13 @@ class Dashboard extends React.Component {
         this.props.getCurrentProfile();
     }
 
-    setUpProfile = user => {
+    createProfile = user => {
         return (
             <div>
                 <p className="lead text-muted">
                     Welcome {user.name}
                 </p>
-                <p>You have not yet setup a profile, please add some info</p>
+                <p>You have not yet create a profile, please add some info</p>
                 <Link to="/create-profile" className="btn btn-lg btn-info">
                     Create Profile
             </Link>
@@ -35,8 +35,8 @@ class Dashboard extends React.Component {
             content = <Spinner />
         } else {
             (!Object.keys(profile).length)
-                ? content = this.setUpProfile(user)
-                : content = <h4>Display Profile</h4>
+                ? content = this.createProfile(user)
+                : content = <h4>Display</h4>
         }
 
         return (

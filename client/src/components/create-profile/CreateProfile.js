@@ -5,6 +5,7 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaField from '../common/TextAreaField';
 import InputGroup from '../common/InputGroup';
 import SelectList from '../common/SelectList';
+import { createProfile } from '../../actions/profileActions';
 import info from './info';
 
 class CreateProfile extends React.Component {
@@ -24,6 +25,13 @@ class CreateProfile extends React.Component {
         instagram: '',
         errors: {}
     }
+
+    static getDerivedStateFromProps = nextProps => {
+        return nextProps.errors
+            ? { errors: nextProps.errors }
+            : null;
+    }
+
     handleChange = event => {
         const { name, value } = event.target;
         this.setState({ [name]: value })
@@ -31,25 +39,14 @@ class CreateProfile extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-
+        const profileData = { ...this.state }
+        this.props.createProfile(profileData, this.props.history)
     }
 
 
     render () {
-        const { textField, inputField } = info;
+        const { textField, inputField, options } = info;
         const { displaySocial, errors } = this.state;
-
-        const options = [
-            { label: '* Select Professional Status', value: 0 },
-            { label: 'Developer', value: 'Developer' },
-            { label: 'Junior Developer', value: 'Junior Developer' },
-            { label: 'Senior Developer', value: 'Senior Developer' },
-            { label: 'Manager', value: 'Manager' },
-            { label: 'Student or Learning', value: 'Student or Learning' },
-            { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
-            { label: 'Intern', value: 'Intern' },
-            { label: 'Other', value: 'Other' }
-        ];
 
         return (
             <div className="create-profile">
@@ -65,7 +62,7 @@ class CreateProfile extends React.Component {
                             <small className="d-block pb-3">
                                 <i className="fas fa-star fa-xs" /> = required fields
                             </small>
-                            <form action={this.handleSubmit}>
+                            <form onSubmit={this.handleSubmit}>
                                 <TextFieldGroup
                                     name="handle"
                                     placeholder="* Profile Handle"
@@ -150,4 +147,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(mapStateToProps, { createProfile })(CreateProfile);

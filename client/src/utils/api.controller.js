@@ -9,6 +9,7 @@ const apiController = {
             ? axios.defaults.headers.common['Authorization'] = token
             : delete axios.defaults.headers.common['Authorization'];
     },
+    createProfile: profileData => axios.post('/api/profile', profileData),
 }
 
 export default apiController;
