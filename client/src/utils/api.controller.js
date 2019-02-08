@@ -10,6 +10,8 @@ const apiController = {
             : delete axios.defaults.headers.common['Authorization'];
     },
     createProfile: profileData => axios.post('/api/profile', profileData),
+    deleteProfile: () => axios.delete('/api/profile'),
+    addExp: expData => axios.post('/api/profile/experience', expData)
 }
 
 export default apiController;

@@ -5,10 +5,10 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaField from '../common/TextAreaField';
 import InputGroup from '../common/InputGroup';
 import SelectList from '../common/SelectList';
-import { createProfile } from '../../actions/profileActions';
+import { createProfile, getCurrentProfile } from '../../actions/profileActions';
 import info from '../common/info.profile';
 
-class CreateProfile extends React.Component {
+class EditProfile extends React.Component {
     state = {
         displaySocial: false,
         handle: '',
@@ -26,8 +26,33 @@ class CreateProfile extends React.Component {
         errors: {}
     }
 
+    componentDidMount = () => {
+        this.props.getCurrentProfile()
+    }
+
     componentWillReceiveProps = nextProps => {
         if (nextProps.errors) this.setState({ errors: nextProps.errors });
+
+        if (nextProps.profile.profile) {
+            const profile = nextProps.profile.profile;
+            const skillsCSV = profile.skills.join(',');
+            const {
+                company = '',
+                website = '',
+                location = '',
+                githubusername = '',
+                bio = '',
+                handle = '',
+                status = '',
+                social: { twitter = '', facebook = '', instagram = '', youtube = '', linkedin = '' } = {}
+            } = profile;
+
+            this.setState({
+                handle, company, website, location, status, skills: skillsCSV,
+                githubusername, bio, twitter, facebook, linkedin, youtube, instagram
+            })
+        }
+
     }
 
     handleChange = event => {
@@ -41,6 +66,7 @@ class CreateProfile extends React.Component {
         this.props.createProfile(profileData, this.props.history)
     }
 
+
     render () {
         const { textField, inputField, options } = info;
         const { displaySocial, errors } = this.state;
@@ -51,11 +77,8 @@ class CreateProfile extends React.Component {
                     <div className="row">
                         <div className="col-md-8 m-auto">
                             <h1 className="display-4 text-center">
-                                Create Your Profile
+                                Edit Your Profile
                             </h1>
-                            <p className="lead text-center">
-                                Share your information with other like minded developers.
-                            </p>
                             <small className="d-block pb-3">
                                 <i className="fas fa-star fa-xs" /> = required fields
                             </small>
@@ -110,6 +133,7 @@ class CreateProfile extends React.Component {
                                     <>
                                         {inputField.map(obj =>
                                             <InputGroup
+                                                key={obj.name}
                                                 placeholder={obj.placeholder}
                                                 name={obj.name}
                                                 icon={obj.icon}
@@ -134,9 +158,11 @@ class CreateProfile extends React.Component {
     }
 }
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
     profile: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    createProfile: PropTypes.func.isRequired,
+    getCurrentProfile: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -144,4 +170,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { createProfile })(CreateProfile);
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(EditProfile);

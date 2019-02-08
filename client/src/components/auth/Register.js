@@ -88,7 +88,7 @@ class Register extends React.Component {
                                     error={errors.password}
                                 />
                                 <TextFieldGroup
-                                    type="password2"
+                                    type="password"
                                     name="password2"
                                     placeholder="Confirm Password"
                                     value={this.state.password2}

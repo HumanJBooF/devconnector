@@ -1,5 +1,4 @@
 import types from '../actions/types';
-import isEmpty from '../validation/is-empty';
 
 const { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE } = types;
 const initialState = {
