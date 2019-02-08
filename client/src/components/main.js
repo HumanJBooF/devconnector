@@ -8,6 +8,7 @@ import { AddExp, AddEdu } from './add-credentials/';
 import Dashboard from './dashboard/';
 import CreateProfile from './create-profile/';
 import EditProfile from './edit-profile/';
+import Profiles from './profiles';
 import PrivateRoute from './common/PrivateRoute';
 import API from '../utils/api.controller';
 import store from '../store';
@@ -36,6 +37,7 @@ class Main extends React.Component {
                 <div className="container">
                     <Route exact path='/register' component={Register} />
                     <Route exact path='/login' component={Login} />
+                    <Route exact path='/profiles' component={Profiles} />
                     <Switch>
                         <PrivateRoute exact path='/dashboard' component={Dashboard} />
                         <PrivateRoute exact path='/create-profile' component={CreateProfile} />

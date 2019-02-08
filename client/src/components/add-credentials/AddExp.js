@@ -32,6 +32,7 @@ class AddExp extends React.Component {
         const expData = {
             ...this.state
         }
+        delete expData.errors;
         this.props.addExp(expData, this.props.history)
     }
 
@@ -63,7 +64,7 @@ class AddExp extends React.Component {
                         <div className="col-md-8 m-auto">
                             <Link to="/dashboard" className="btn btn-light">
                                 Go Back
-                        </Link>
+                            </Link>
                             <h1 className="display-4 text-center">Add Experience</h1>
                             <p className="lead text-center">
                                 Add any job or postion that you have had or currently have.

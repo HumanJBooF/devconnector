@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { createProfile, getCurrentProfile } from '../../actions/profileActions';
 import PropTypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaField from '../common/TextAreaField';
 import InputGroup from '../common/InputGroup';
 import SelectList from '../common/SelectList';
-import { createProfile, getCurrentProfile } from '../../actions/profileActions';
 import info from '../common/info.profile';
 
 class EditProfile extends React.Component {
@@ -26,9 +27,7 @@ class EditProfile extends React.Component {
         errors: {}
     }
 
-    componentDidMount = () => {
-        this.props.getCurrentProfile()
-    }
+    componentDidMount = () => this.props.getCurrentProfile();
 
     componentWillReceiveProps = nextProps => {
         if (nextProps.errors) this.setState({ errors: nextProps.errors });
@@ -76,6 +75,9 @@ class EditProfile extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
+                            <Link to="/dashboard" className="btn btn-light">
+                                Go Back
+                            </Link>
                             <h1 className="display-4 text-center">
                                 Edit Your Profile
                             </h1>

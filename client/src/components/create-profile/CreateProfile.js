@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux';
+import { createProfile } from '../../actions/profileActions';
 import PropTypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaField from '../common/TextAreaField';
 import InputGroup from '../common/InputGroup';
 import SelectList from '../common/SelectList';
-import { createProfile } from '../../actions/profileActions';
 import info from '../common/info.profile';
 
 class CreateProfile extends React.Component {
