@@ -1,8 +1,6 @@
 # devconnector
 Social app for developers built with MERN stack
 
-#### Will be ready by *2/7/2019*
-
 ### Features
 * Profiles
 * Posts

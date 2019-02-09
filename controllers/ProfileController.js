@@ -32,10 +32,14 @@ const ProfileController = {
 
         // Destructuring req.user && req.body for the skills array and social object
         const { id } = req.user;
-        const { skills, youtube, twitter, facebook, linkedin, instagram } = req.body;
+        const { website, skills, youtube, twitter, facebook, linkedin, instagram } = req.body;
+
         const profileFields = {
             user: id,
             ...req.body, // spreading the rest of req.body
+            website: (!/^https?:\/\//i.test(website))
+                ? `https://${website}`
+                : website,
             skills: skills.split(',')
                 .map(skill => skill.trim()) // Splitting skills by coma and removing duplicates in skills array
                 .filter((val, i, arr) => arr.indexOf(val) === i),
@@ -43,11 +47,34 @@ const ProfileController = {
 
         // Social
         profileFields.social = {};
-        if (youtube) profileFields.social.youtube = youtube;
-        if (facebook) profileFields.social.facebook = facebook;
-        if (twitter) profileFields.social.twitter = twitter;
-        if (linkedin) profileFields.social.linkedin = linkedin;
-        if (instagram) profileFields.social.instagram = instagram;
+        // Checking if the links are there
+        // If they are, we check if they have https:// in front 
+        // If they don't we add them
+        if (youtube) {
+            (!/^https?:\/\//i.test(youtube))
+                ? profileFields.social.youtube = `https://${youtube}`
+                : profileFields.social.youtube = youtube;
+        }
+        if (facebook) {
+            (!/^https?:\/\//i.test(facebook))
+                ? profileFields.social.facebook = `https://${facebook}`
+                : profileFields.social.facebook = facebook;
+        }
+        if (twitter) {
+            (!/^https?:\/\//i.test(twitter))
+                ? profileFields.social.twitter = `https://${twitter}`
+                : profileFields.social.twitter = twitter;
+        }
+        if (linkedin) {
+            (!/^https?:\/\//i.test(linkedin))
+                ? profileFields.social.linkedin = `https://${linkedin}`
+                : profileFields.social.linkedin = linkedin;
+        }
+        if (instagram) {
+            (!/^https?:\/\//i.test(instagram))
+                ? profileFields.social.instagram = `https://${instagram}`
+                : profileFields.social.instagram = instagram;
+        }
 
         Profile.findOne({ user: profileFields.user })
             .then(profile => {
@@ -58,7 +85,7 @@ const ProfileController = {
                         { $set: profileFields },
                         { new: true })
                         .then(profile => res.json(profile))
-                        .catch(err => res.json(err));
+                        .catch(err => res.json(err, console.log(err)));
                 } else {
                     // Create
                     // Check if handle exist

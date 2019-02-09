@@ -17,13 +17,20 @@ const getProfiles = () => dispatch => {
     dispatch(setProfileLoading());
     API.getAllProfiles()
         .then(res => dispatch({ type: GET_PROFILES, payload: res.data }))
-        .catch(err => dispatch({ type: GET_PROFILES, payload: {} }))
+        .catch(err => dispatch({ type: GET_PROFILES, payload: {} }));
+}
+
+const getProfileByHandle = handle => dispatch => {
+    dispatch(setProfileLoading());
+    API.getProfileByHandle(handle)
+        .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
+        .catch(err => dispatch({ type: GET_PROFILE, payload: null }));
 }
 
 const createProfile = (profileData, history) => dispatch => {
     API.createProfile(profileData)
         .then(res => history.push('/dashboard'))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 }
 
 const setProfileLoading = () => {
@@ -38,13 +45,13 @@ const clearProfile = () => {
 const addExp = (expData, history) => dispatch => {
     API.addExp(expData)
         .then(res => history.push('/dashboard'))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 }
 
 const addEdu = (eduData, history) => dispatch => {
     API.addEdu(eduData)
         .then(res => history.push('/dashboard'))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 }
 
 const deleteAccount = () => dispatch => {
@@ -68,7 +75,7 @@ const deleteAccount = () => dispatch => {
             )
             API.deleteProfile()
                 .then(res => dispatch(logoutUser()))
-                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
         }
     })
 }
@@ -94,7 +101,7 @@ const deleteExp = id => dispatch => {
             )
             API.deleteExp(id)
                 .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
-                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
         }
     })
 }
@@ -119,7 +126,7 @@ const deleteEdu = id => dispatch => {
             )
             API.deleteEdu(id)
                 .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
-                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
         }
     })
 }
@@ -133,5 +140,6 @@ export {
     addEdu,
     deleteExp,
     deleteEdu,
-    getProfiles
+    getProfiles,
+    getProfileByHandle
 } 
