@@ -38,9 +38,6 @@ const ProfileController = {
         const profileFields = {
             user: id,
             ...req.body, // spreading the rest of req.body
-            website: (!/^https?:\/\//i.test(website))
-                ? `https://${website}`
-                : website,
             skills: skills.split(',')
                 .map(skill => skill.trim()) // Splitting skills by coma and removing duplicates in skills array
                 .filter((val, i, arr) => arr.indexOf(val) === i),
@@ -51,31 +48,41 @@ const ProfileController = {
         // Checking if the links are there
         // If they are, we check if they have https:// in front 
         // If they don't we add them
+        if (website) {
+            (!/^https?:\/\//i.test(website))
+                ? profileFields.website = `https://${website}`
+                : profileFields.website = website
+        } else profileFields.website = "";
+
         if (youtube) {
             (!/^https?:\/\//i.test(youtube))
                 ? profileFields.social.youtube = `https://${youtube}`
                 : profileFields.social.youtube = youtube;
-        }
+        } else profileFields.social.youtube = "";
+
         if (facebook) {
             (!/^https?:\/\//i.test(facebook))
                 ? profileFields.social.facebook = `https://${facebook}`
                 : profileFields.social.facebook = facebook;
-        }
+        } else profileFields.social.facebook = "";
+
         if (twitter) {
             (!/^https?:\/\//i.test(twitter))
                 ? profileFields.social.twitter = `https://${twitter}`
                 : profileFields.social.twitter = twitter;
-        }
+        } else profileFields.social.twitter = "";
+
         if (linkedin) {
             (!/^https?:\/\//i.test(linkedin))
                 ? profileFields.social.linkedin = `https://${linkedin}`
                 : profileFields.social.linkedin = linkedin;
-        }
+        } else profileFields.social.linkedin = "";
+
         if (instagram) {
             (!/^https?:\/\//i.test(instagram))
                 ? profileFields.social.instagram = `https://${instagram}`
                 : profileFields.social.instagram = instagram;
-        }
+        } else profileFields.social.instagram = "";
 
         Profile.findOne({ user: profileFields.user })
             .then(profile => {
@@ -241,7 +248,7 @@ const ProfileController = {
     },
     // @route GET /api/github
     // @desc GET users github info
-    // @access Public
+    // @access Public if logged in
     getGithubRepos: (req, res) => {
         const { username } = req.params;
         const { REACT_APP_GITHUB_CLIENT_ID, REACT_APP_GITHUB_CLIENT_SECRET } = process.env;

@@ -12,8 +12,11 @@ import Spinner from '../common/Spinner';
 class Profile extends React.Component {
 
     componentDidMount = () => {
-        if (this.props.match.params.handle) this.props.getProfileByHandle(this.props.match.params.handle)
+        if (this.props.match.params.handle) {
+            this.props.getProfileByHandle(this.props.match.params.handle)
+        }
     }
+
     render () {
         const { profile: { profile, loading } } = this.props;
         let profileContent;
@@ -38,7 +41,7 @@ class Profile extends React.Component {
                     />
                     {profile.github
                         ? <ProfileGithub username={profile.github} />
-                        : null
+                        : <h2 className="text-center">Add you Github username to your profile to see your repos</h2>
                     }
                 </div>
             );

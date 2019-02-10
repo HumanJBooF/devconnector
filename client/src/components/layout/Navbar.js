@@ -11,6 +11,7 @@ class Navbar extends React.Component {
         event.preventDefault();
         this.props.clearProfile();
         this.props.logoutUser();
+        window.location.href = '/login';
     }
 
     render () {
@@ -69,7 +70,6 @@ class Navbar extends React.Component {
                             </li>
                         </ul>
                         {!isAuthenticated ? guestLinks : authLinks}
-
                     </div>
                 </div>
             </nav>

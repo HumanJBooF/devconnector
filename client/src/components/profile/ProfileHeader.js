@@ -4,7 +4,6 @@ import isEmpty from '../../validation/is-empty';
 const ProfileHeader = props => {
 
     const { profile: { user, status, company, location, website, social } } = props;
-
     const socialObj = [
         { link: website, icon: 'fas fa-globe fa-2x' },
         { link: social.twitter, icon: 'fab fa-twitter fa-2x' },
