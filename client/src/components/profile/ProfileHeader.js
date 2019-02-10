@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import isEmpty from '../../validation/is-empty';
 
 const ProfileHeader = props => {

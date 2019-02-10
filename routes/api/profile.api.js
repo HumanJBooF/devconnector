@@ -16,5 +16,6 @@ router.delete('/', passport.authenticate('jwt', { session: false }), ProfileCont
 router.get('/handle/:handle', ProfileController.getByHandle);
 router.get('/user/:user_id', ProfileController.getById);
 router.get('/all', ProfileController.getAllProfiles);
+router.get('/github/:username', ProfileController.getGithubRepos);
 
 module.exports = router;
