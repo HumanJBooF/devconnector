@@ -1,6 +1,6 @@
 import types from '../actions/types';
 
-const { ADD_POST, POST_LOADING, GET_POSTS, GET_POST, DELETE_POST, LIKE_POST } = types;
+const { ADD_POST, POST_LOADING, GET_POSTS, GET_POST, DELETE_POST, LIKE_POST, DELETE_COMMENT } = types;
 
 const initialState = {
     posts: [],
@@ -14,6 +14,8 @@ const postState = (state = initialState, action) => {
             return { ...state, posts: [action.payload, ...state.posts] };
         case POST_LOADING:
             return { ...state, loading: true };
+        case GET_POST:
+            return { ...state, post: action.payload, loading: false }
         case GET_POSTS:
             return { ...state, posts: action.payload, loading: false }
         case DELETE_POST:
@@ -21,6 +23,16 @@ const postState = (state = initialState, action) => {
                 ...state,
                 posts: state.posts.filter(post => post._id !== action.payload)
             };
+        case DELETE_COMMENT:
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    comments: state.post.comments.filter(comment =>
+                        comment._id !== action.payload
+                    )
+                }
+            }
         case LIKE_POST:
             return {
                 ...state,
@@ -30,8 +42,6 @@ const postState = (state = initialState, action) => {
                         : post
                 )
             }
-        case GET_POST:
-            return { ...state, post: action.payload, loading: false }
         default:
             return state;
     }

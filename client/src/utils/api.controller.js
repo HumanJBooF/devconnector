@@ -16,12 +16,14 @@ const apiController = {
     addEdu: eduData => axios.post('/api/profile/education', eduData),
     addPost: postData => axios.post('/api/posts', postData),
     addLike: id => axios.post(`/api/posts/like/${id}`),
+    addComment: (postId, commentData) => axios.post(`/api/posts/comment/${postId}`, commentData),
     removeLike: id => axios.post(`/api/posts/unlike/${id}`),
     // Axios .delete
     deleteProfile: () => axios.delete('/api/profile'),
     deleteExp: id => axios.delete(`/api/profile/experience/${id}`),
     deleteEdu: id => axios.delete(`/api/profile/education${id}`),
     deletePost: id => axios.delete(`api/posts/${id}`),
+    deleteComment: (postId, commentId) => axios.delete(`/api/posts/comment/${postId}/${commentId}`),
     // headers auth
     setAuthToken: token => {
         token

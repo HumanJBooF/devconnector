@@ -19,41 +19,38 @@ class Profile extends React.Component {
 
     render () {
         const { profile: { profile, loading } } = this.props;
-        let profileContent;
-        if (!profile || loading) {
-            profileContent = <Spinner />
-        } else {
-            profileContent = (
-                <div>
-                    <div className="row">
-                        <div className="col-md-2 offset-5">
-                            <Link to="/profiles" className="btn btn-light mb-5">
-                                Go to all profiles
-                            </Link>
-                        </div>
-                        <div className="col-md-6" />
-                    </div>
-                    <ProfileHeader profile={profile} />
-                    <ProfileAbout profile={profile} />
-                    <ProfileCreds
-                        education={profile.education}
-                        experience={profile.experience}
-                    />
-                    {profile.github
-                        ? <ProfileGithub username={profile.github} />
-                        : <h2 className="text-center">
-                            Add you Github username to your profile to see your repos
-                          </h2>
-                    }
-                </div>
-            );
-        }
+
         return (
             <div className="profile">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            {profileContent}
+                            {!profile || loading
+                                ? <Spinner />
+                                : (
+                                    <div>
+                                        <div className="row">
+                                            <div className="col-md-2 offset-5">
+                                                <Link to="/profiles" className="btn btn-light mb-5">
+                                                    Go to all profiles
+                                                </Link>
+                                            </div>
+                                            <div className="col-md-6" />
+                                        </div>
+                                        <ProfileHeader profile={profile} />
+                                        <ProfileAbout profile={profile} />
+                                        <ProfileCreds
+                                            education={profile.education}
+                                            experience={profile.experience}
+                                        />
+                                        {profile.github
+                                            ? <ProfileGithub username={profile.github} />
+                                            : <h2 className="text-center">
+                                                Add you Github username to your profile to see your repos
+                                              </h2>
+                                        }
+                                    </div>
+                                )}
                         </div>
                     </div>
                 </div>

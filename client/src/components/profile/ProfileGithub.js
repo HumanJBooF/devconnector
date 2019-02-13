@@ -11,9 +11,8 @@ class ProfileGithub extends React.Component {
     componentDidMount = () => {
         const { username } = this.props;
         API.getGithubRepos(username)
-            .then(res => {
-                this.setState({ repos: res.data.data })
-            }).catch(err => console.log(err))
+            .then(res => this.setState({ repos: res.data.data }))
+            .catch(err => console.log(err))
     }
 
     render () {

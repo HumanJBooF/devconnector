@@ -30,21 +30,24 @@ const ProfileController = {
         if (!isValid) {
             return res.status(400).json(errors);
         }
-
-        // Destructuring req.user && req.body for the skills array and social object
+        // Destructuring req.user && req.body
         const { id } = req.user;
-        const { website, skills, youtube, twitter, facebook, linkedin, instagram } = req.body;
-
+        const { handle, company, location, bio, github, status, website, skills } = req.body;
+        const social = ['youtube', 'twitter', 'facebook', 'linkedin', 'instagram'];
         const profileFields = {
             user: id,
-            ...req.body, // spreading the rest of req.body
+            handle,
+            company,
+            location,
+            bio,
+            github,
+            status,
+            // Splitting skills by coma and removing duplicates in skills array
             skills: skills.split(',')
-                .map(skill => skill.trim()) // Splitting skills by coma and removing duplicates in skills array
+                .map(skill => skill.trim())
                 .filter((val, i, arr) => arr.indexOf(val) === i),
         };
 
-        // Social
-        profileFields.social = {};
         // Checking if the links are there
         // If they are, we check if they have https:// in front 
         // If they don't we add them
@@ -54,36 +57,17 @@ const ProfileController = {
                 : profileFields.website = website
         } else profileFields.website = "";
 
-        if (youtube) {
-            (!/^https?:\/\//i.test(youtube))
-                ? profileFields.social.youtube = `https://${youtube}`
-                : profileFields.social.youtube = youtube;
-        } else profileFields.social.youtube = "";
+        // Social
+        profileFields.social = {};
+        social.forEach(field => {
+            if (req.body[field]) {
+                (!/^https?:\/\//i.test(field))
+                    ? profileFields.social[field] = `https://${req.body[field]}`
+                    : profileFields.social[field] = req.body[field]
+            } else profileFields.social[field] = '';
+        })
 
-        if (facebook) {
-            (!/^https?:\/\//i.test(facebook))
-                ? profileFields.social.facebook = `https://${facebook}`
-                : profileFields.social.facebook = facebook;
-        } else profileFields.social.facebook = "";
-
-        if (twitter) {
-            (!/^https?:\/\//i.test(twitter))
-                ? profileFields.social.twitter = `https://${twitter}`
-                : profileFields.social.twitter = twitter;
-        } else profileFields.social.twitter = "";
-
-        if (linkedin) {
-            (!/^https?:\/\//i.test(linkedin))
-                ? profileFields.social.linkedin = `https://${linkedin}`
-                : profileFields.social.linkedin = linkedin;
-        } else profileFields.social.linkedin = "";
-
-        if (instagram) {
-            (!/^https?:\/\//i.test(instagram))
-                ? profileFields.social.instagram = `https://${instagram}`
-                : profileFields.social.instagram = instagram;
-        } else profileFields.social.instagram = "";
-
+        console.log(profileFields)
         Profile.findOne({ user: profileFields.user })
             .then(profile => {
                 if (profile) {

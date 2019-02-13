@@ -1,10 +1,16 @@
 import API from '../utils/api.controller';
-import types from './types';
+import { logoutUser } from './authActions';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { logoutUser } from './authActions';
+import types from './types';
 
-const { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, GET_PROFILES } = types;
+const {
+    GET_PROFILE,
+    PROFILE_LOADING,
+    CLEAR_CURRENT_PROFILE,
+    GET_ERRORS,
+    GET_PROFILES,
+    CLEAR_ERRORS } = types;
 
 const getCurrentProfile = () => dispatch => {
     dispatch(setProfileLoading());
@@ -28,6 +34,7 @@ const getProfileByHandle = handle => dispatch => {
 }
 
 const createProfile = (profileData, history) => dispatch => {
+    dispatch(clearErrors());
     API.createProfile(profileData)
         .then(res => history.push('/dashboard'))
         .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
@@ -41,14 +48,19 @@ const clearProfile = () => {
     return { type: CLEAR_CURRENT_PROFILE }
 }
 
+const clearErrors = () => {
+    return { type: CLEAR_ERRORS }
+}
 
 const addExp = (expData, history) => dispatch => {
+    dispatch(clearErrors());
     API.addExp(expData)
         .then(res => history.push('/dashboard'))
         .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 }
 
 const addEdu = (eduData, history) => dispatch => {
+    dispatch(clearErrors());
     API.addEdu(eduData)
         .then(res => history.push('/dashboard'))
         .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));

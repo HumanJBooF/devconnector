@@ -49,7 +49,8 @@ const PostController = {
                 if (post.user.toString() !== req.user.id) {
                     return res.status(404).json({ noAuth: 'User not authorized to delete this post!' });
                 }
-                post.remove().then(() => res.json({ success: true }))
+                post.remove()
+                    .then(() => res.json({ success: true }))
             }).catch(err => res.status(404).err({ noPost: 'No post was found!' }));
     },
     // @route POST /api/posts/like/:id
@@ -77,7 +78,7 @@ const PostController = {
     // @access Private
     unlikePost: (req, res) => {
         const { id } = req.params;
-        const userID = req.user.id;
+        const { id: userID } = req.user;
         Post.findById(id)
             .then(post => {
                 const checkLike = post.likes.filter(like => {
@@ -107,10 +108,16 @@ const PostController = {
         }
 
         const { id } = req.params;
-        const userID = req.user.id;
+        const { id: userID, name, avatar } = req.user;
+        const { text } = req.body;
         Post.findById(id)
             .then(post => {
-                const newComment = { ...req.body, user: userID };
+                const newComment = {
+                    user: userID,
+                    name,
+                    avatar,
+                    text
+                };
                 post.comments.unshift(newComment);
                 post.save().then(post => res.json(post));
             })
@@ -127,9 +134,8 @@ const PostController = {
                     return comment._id.toString() === comment_id
                 }).length === 0;
 
-                if (checkComment) {
-                    return res.status(404).json({ noComment: 'That comment does not exist' });
-                }
+                if (checkComment) res.status(404).json({ noComment: 'That comment does not exist' });
+
                 // Get remove index
                 const removeIndex = post.comments
                     .map(item => item._id.toString())

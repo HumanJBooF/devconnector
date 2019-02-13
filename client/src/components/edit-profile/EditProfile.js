@@ -29,11 +29,17 @@ class EditProfile extends React.Component {
 
     componentDidMount = () => this.props.getCurrentProfile();
 
-    componentWillReceiveProps = nextProps => {
-        if (nextProps.errors) this.setState({ errors: nextProps.errors });
+    static getDerivedStateFromProps = nextProps => {
+        return nextProps.errors
+            ? { errors: nextProps.errors }
+            : null;
+    }
 
-        if (nextProps.profile.profile) {
-            const profile = nextProps.profile.profile;
+    componentDidUpdate = prevProps => {
+        if (prevProps.errors !== this.props.errors) this.setState({ errors: this.props.errors })
+
+        if (this.props.profile.profile) {
+            const { profile } = this.props.profile;
             const skillsCSV = profile.skills.join(',');
             const {
                 company = '',
@@ -45,13 +51,13 @@ class EditProfile extends React.Component {
                 status = '',
                 social: { twitter = '', facebook = '', instagram = '', youtube = '', linkedin = '' } = {}
             } = profile;
-
-            this.setState({
-                handle, company, website, location, status, skills: skillsCSV,
-                github, bio, twitter, facebook, linkedin, youtube, instagram
-            })
+            if (prevProps.profile !== this.props.profile) {
+                this.setState({
+                    handle, company, website, location, status, skills: skillsCSV,
+                    github, bio, twitter, facebook, linkedin, youtube, instagram
+                })
+            }
         }
-
     }
 
     handleChange = event => {

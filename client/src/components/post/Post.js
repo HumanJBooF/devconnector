@@ -5,6 +5,8 @@ import { getPost } from '../../actions/postActions';
 import { Link } from 'react-router-dom';
 import PostItem from '../posts/PostItem';
 import Spinner from '../common/Spinner';
+import Comments from './CommentsForm';
+import CommentFeed from './CommentFeed';
 
 
 class Post extends React.Component {
@@ -23,7 +25,13 @@ class Post extends React.Component {
                             </Link>
                             {!Object.keys(post).length || loading
                                 ? <Spinner />
-                                : <><PostItem post={post} showActions={false} /></>
+                                : (
+                                    <>
+                                        <PostItem post={post} showActions={false} />
+                                        <Comments postId={post._id} />
+                                        <CommentFeed postId={post._id} comments={post.comments} />
+                                    </>
+                                )
                             }
                         </div>
                     </div>

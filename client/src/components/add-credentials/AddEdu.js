@@ -23,10 +23,15 @@ class AddEdu extends React.Component {
 
     componentDidMount = () => this.props.getCurrentProfile();
 
-    componentWillReceiveProps = nextProps => {
-        if (nextProps.errors) {
-            this.setState({ errors: nextProps.errors })
-        }
+
+    static getDerivedStateFromProps = nextProps => {
+        return nextProps.errors
+            ? { errors: nextProps.errors }
+            : null;
+    }
+
+    componentDidUpdate = prevProps => {
+        if (prevProps.errors !== this.props.errors) this.setState({ errors: this.props.errors });
     }
 
     handleSubmit = event => {

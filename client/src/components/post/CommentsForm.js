@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addPost } from '../../actions/postActions';
+import { addComment } from '../../actions/postActions';
 import TextAreaField from '../common/TextAreaField';
 
-class PostForm extends React.Component {
+class CommentsForm extends React.Component {
     state = {
         text: '',
         errors: {}
@@ -28,8 +28,9 @@ class PostForm extends React.Component {
     handleSubmit = event => {
         event.preventDefault()
         const { text } = this.state;
-        const newPost = { text };
-        this.props.addPost(newPost);
+        const { postId } = this.props;
+        const newComment = { text };
+        this.props.addComment(postId, newComment);
         if (this.state.text.length > 10) this.setState({ text: '' })
     }
 
@@ -40,13 +41,13 @@ class PostForm extends React.Component {
                 <div className="post-form mb-3">
                     <div className="card card-info">
                         <div className="card-header bg-dark text-white">
-                            Write a post...
+                            Write a comment...
                         </div>
                         <div className="card-body">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-group">
                                     <TextAreaField
-                                        placeholder="Create a post"
+                                        placeholder="Reply to post"
                                         name="text"
                                         value={this.state.text}
                                         onChange={this.handleChange}
@@ -63,13 +64,14 @@ class PostForm extends React.Component {
     }
 }
 
-PostForm.propTypes = {
-    addPost: PropTypes.func.isRequired,
+CommentsForm.propTypes = {
+    addComment: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
+    postId: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => ({
-    errors: state.errors,
+    errors: state.errors
 })
 
-export default connect(mapStateToProps, { addPost })(PostForm);
+export default connect(mapStateToProps, { addComment })(CommentsForm);

@@ -18,6 +18,7 @@ class PostItem extends React.Component {
         const check = likes.filter(like => like.user === user.id);
         return !check.length ? false : true;
     }
+
     render () {
         const { post, auth: { user }, showActions } = this.props;
 

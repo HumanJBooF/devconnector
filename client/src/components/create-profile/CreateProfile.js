@@ -26,8 +26,14 @@ class CreateProfile extends React.Component {
         errors: {}
     }
 
-    componentWillReceiveProps = nextProps => {
-        if (nextProps.errors) this.setState({ errors: nextProps.errors });
+    static getDeviredStateFromProps = nextProps => {
+        return nextProps.errors
+            ? { errors: nextProps.errors }
+            : null;
+    }
+
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevProps.errors !== this.props.errors) this.setState({ errors: this.props.errors })
     }
 
     handleChange = event => {

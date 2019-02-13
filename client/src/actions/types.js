@@ -11,7 +11,9 @@ const types = {
     GET_POST: 'GET_POST',
     ADD_POST: 'ADD_POST',
     DELETE_POST: 'DELETE_POST',
-    LIKE_POST: 'LIKE_POST'
+    LIKE_POST: 'LIKE_POST',
+    DELETE_COMMENT: 'DELETE_COMMENT',
+    CLEAR_ERRORS: 'CLEAR_ERRORS'
 }
 
 export default types;
