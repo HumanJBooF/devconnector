@@ -30,7 +30,7 @@ const PostController = {
             return res.status(400).json(errors)
         }
         const { id, name, avatar } = req.user;
-        const { text } = req.body
+        const { text } = req.body;
         const newPost = new Post({
             user: id,
             name,

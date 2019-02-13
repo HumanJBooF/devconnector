@@ -51,7 +51,7 @@ class AddEdu extends React.Component {
 
     render () {
         const { errors } = this.state;
-        const { profile: { profile: { handle } } } = this.props
+        const { profile: { profile: { handle } } } = this.props;
         const info = [
             { placeholder: '* School', name: 'school' },
             { placeholder: '* Degree or Certification', name: 'degree' },

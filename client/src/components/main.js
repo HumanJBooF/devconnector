@@ -12,6 +12,7 @@ import Posts from './posts/';
 import Profiles from './profiles/';
 import Profile from './profile/';
 import NotFound from './not-found/';
+import Post from './post';
 import PrivateRoute from './common/PrivateRoute';
 import API from '../utils/api.controller';
 import store from '../store';
@@ -48,6 +49,7 @@ class Main extends React.Component {
                     <PrivateRoute exact path='/add-experience' component={AddExp} />
                     <PrivateRoute exact path='/add-education' component={AddEdu} />
                     <PrivateRoute exact path='/feed' component={Posts} />
+                    <PrivateRoute exact path='/post/:id' component={Post} />
                     <Route component={NotFound} />
                 </Switch>
                 <Footer />

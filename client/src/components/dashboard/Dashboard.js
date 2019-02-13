@@ -50,7 +50,6 @@ class Dashboard extends React.Component {
             profile: { profile, loading },
             auth: { user }
         } = this.props;
-        console.log(profile)
         let content;
         if (!profile || loading) {
             content = <Spinner />
