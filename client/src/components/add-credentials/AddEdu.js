@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addEdu } from '../../actions/profileActions';
+import { addEdu, getCurrentProfile } from '../../actions/profileActions';
 import PropTypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaField from '../common/TextAreaField';
@@ -21,6 +21,8 @@ class AddEdu extends React.Component {
         disabled: false
     }
 
+    componentDidMount = () => this.props.getCurrentProfile();
+
     componentWillReceiveProps = nextProps => {
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors })
@@ -29,9 +31,7 @@ class AddEdu extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const eduData = {
-            ...this.state
-        }
+        const eduData = { ...this.state };
         // Remove errors from object
         delete eduData.errors;
         this.props.addEdu(eduData, this.props.history)
@@ -51,12 +51,12 @@ class AddEdu extends React.Component {
 
     render () {
         const { errors } = this.state;
-
+        const { profile: { profile: { handle } } } = this.props
         const info = [
             { placeholder: '* School', name: 'school' },
             { placeholder: '* Degree or Certification', name: 'degree' },
             { placeholder: '* Field of Study', name: 'studied' }
-        ]
+        ];
 
         return (
             <div className="add-education">
@@ -64,8 +64,11 @@ class AddEdu extends React.Component {
                     <div className="row">
                         <div className="col-md-8 m-auto">
                             <Link to="/dashboard" className="btn btn-light">
-                                Go Back
-                        </Link>
+                                Go to the dashboard
+                            </Link>
+                            <Link to={`/profile/${handle}`} className="btn btn-light float-right">
+                                Go to your profile
+                            </Link>
                             <h1 className="display-4 text-center">Add Education</h1>
                             <p className="lead text-center">
                                 Add any school, bootcamp, classes, etc you may have taken
@@ -140,7 +143,7 @@ class AddEdu extends React.Component {
 AddEdu.propTypes = {
     profile: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
-    AddEdu: PropTypes.func.isRequired
+    AddEdu: PropTypes.func
 }
 
 const mapStateToProps = state => ({
@@ -148,4 +151,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 })
 
-export default connect(mapStateToProps, { addEdu })(AddEdu);
+export default connect(mapStateToProps, { addEdu, getCurrentProfile })(AddEdu);

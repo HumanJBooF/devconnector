@@ -93,7 +93,7 @@ const ProfileController = {
                         { $set: profileFields },
                         { new: true })
                         .then(profile => res.json(profile))
-                        .catch(err => res.json(err, console.log(err)));
+                        .catch(err => res.json(err));
                 } else {
                     // Create
                     // Check if handle exist
@@ -167,12 +167,11 @@ const ProfileController = {
 
         Profile.findOne({ user: id })
             .then(profile => {
-                const newExp = {
-                    ...req.body // spread req.body experience to newExp object
-                }
+                const newExp = { ...req.body }  // spread req.body experience to newExp object
                 // Add to exp array
                 profile.experience.unshift(newExp);
-                profile.save().then(profile => res.json(profile))
+                profile.save()
+                    .then(profile => res.json(profile))
                     .catch(err => res.json(err));
             });
     },
@@ -195,7 +194,8 @@ const ProfileController = {
                 }
                 // Add to exp array
                 profile.education.unshift(newEdu);
-                profile.save().then(profile => res.json(profile))
+                profile.save()
+                    .then(profile => res.json(profile))
                     .catch(err => res.json(err));
             });
     },
@@ -214,7 +214,8 @@ const ProfileController = {
                     .indexOf(exp_id);
                 // Splice out of array
                 profile.experience.splice(removeIndex, 1);
-                profile.save().then(profile => res.json(profile))
+                profile.save()
+                    .then(profile => res.json(profile))
             }).catch(err => res.status(404).json(err));
     },
     // @route DELETE /api/profile/education/:edu_id

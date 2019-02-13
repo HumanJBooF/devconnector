@@ -29,10 +29,13 @@ const PostController = {
         if (!isValid) {
             return res.status(400).json(errors)
         }
-        const { id } = req.user;
+        const { id, name, avatar } = req.user;
+        const { text } = req.body
         const newPost = new Post({
-            ...req.body, // Spread in req.body
-            user: id
+            user: id,
+            name,
+            avatar,
+            text
         });
         newPost.save().then(post => res.json(post))
     },

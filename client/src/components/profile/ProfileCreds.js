@@ -1,5 +1,6 @@
 import React from 'react';
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 
 const ProfileCreds = props => {
     const { education, experience } = props;
@@ -61,14 +62,14 @@ const ProfileCreds = props => {
             <div className="col-md-6">
                 <h3 className="text-center text-info">Experience</h3>
                 {!expItems.length
-                    ? <p className="text-center">No Experience Listed</p>
+                    ? <div className="text-center"><Link to='/add-experience' className="btn btn-primary btn-lg">Add Experience</Link></div>
                     : <ul className="list-group">{expItems}</ul>
                 }
             </div>
             <div className="col-md-6">
                 <h3 className="text-center text-info">Education</h3>
                 {!eduItems.length
-                    ? <p className="text-center">No Education Listed</p>
+                    ? <div className="text-center"><Link to='/add-education' className="btn btn-primary btn-lg">Add Education</Link></div>
                     : <ul className="list-group">{eduItems}</ul>
                 }
             </div>

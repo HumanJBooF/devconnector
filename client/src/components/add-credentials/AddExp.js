@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaField from '../common/TextAreaField';
-import { addExp } from '../../actions/profileActions';
+import { addExp, getCurrentProfile } from '../../actions/profileActions';
 
 
 class AddExp extends React.Component {
@@ -21,6 +21,8 @@ class AddExp extends React.Component {
         disabled: false
     }
 
+    componentDidMount = () => this.props.getCurrentProfile();
+
     componentWillReceiveProps = nextProps => {
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors })
@@ -29,9 +31,7 @@ class AddExp extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const expData = {
-            ...this.state
-        }
+        const expData = { ...this.state };
         delete expData.errors;
         this.props.addExp(expData, this.props.history)
     }
@@ -50,7 +50,7 @@ class AddExp extends React.Component {
 
     render () {
         const { errors } = this.state;
-
+        const { profile: { profile: { handle } } } = this.props;
         const info = [
             { placeholder: '* Company', name: 'company' },
             { placeholder: '* Job Title', name: 'title' },
@@ -63,8 +63,12 @@ class AddExp extends React.Component {
                     <div className="row">
                         <div className="col-md-8 m-auto">
                             <Link to="/dashboard" className="btn btn-light">
-                                Go Back
+                                Go to the dashboard
                             </Link>
+                            <Link to={`/profile/${handle}`} className="btn btn-light float-right">
+                                Go to your profile
+                            </Link>
+
                             <h1 className="display-4 text-center">Add Experience</h1>
                             <p className="lead text-center">
                                 Add any job or postion that you have had or currently have.
@@ -147,4 +151,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 })
 
-export default connect(mapStateToProps, { addExp })(AddExp);
+export default connect(mapStateToProps, { addExp, getCurrentProfile })(AddExp);

@@ -26,10 +26,10 @@ class Profile extends React.Component {
             profileContent = (
                 <div>
                     <div className="row">
-                        <div className="col-md-6">
-                            <Link to="/profiles" className="btn btn-light mb-3 float-left">
-                                Back To Profiles
-              </Link>
+                        <div className="col-md-2 offset-5">
+                            <Link to="/profiles" className="btn btn-light mb-5">
+                                Go to all profiles
+                            </Link>
                         </div>
                         <div className="col-md-6" />
                     </div>
@@ -41,7 +41,9 @@ class Profile extends React.Component {
                     />
                     {profile.github
                         ? <ProfileGithub username={profile.github} />
-                        : <h2 className="text-center">Add you Github username to your profile to see your repos</h2>
+                        : <h2 className="text-center">
+                            Add you Github username to your profile to see your repos
+                          </h2>
                     }
                 </div>
             );

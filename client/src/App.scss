@@ -43,3 +43,14 @@ img {
 .table {
   table-layout: fixed;
 }
+
+.not-found {
+  position: relative;
+  background: url('./img/404Error.jpg');
+  background-size: 88%;
+  background-position: center;
+  height: 90vh;
+  margin-top: -24px;
+  margin-bottom: -48px;
+
+}

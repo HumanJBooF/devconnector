@@ -39,7 +39,7 @@ class EditProfile extends React.Component {
                 company = '',
                 website = '',
                 location = '',
-                githubusername = '',
+                github = '',
                 bio = '',
                 handle = '',
                 status = '',
@@ -48,7 +48,7 @@ class EditProfile extends React.Component {
 
             this.setState({
                 handle, company, website, location, status, skills: skillsCSV,
-                githubusername, bio, twitter, facebook, linkedin, youtube, instagram
+                github, bio, twitter, facebook, linkedin, youtube, instagram
             })
         }
 

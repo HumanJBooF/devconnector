@@ -26,7 +26,7 @@ class Login extends React.Component {
             : null;
     }
 
-    componentDidUpdate = (prevProps, prevState) => {
+    componentDidUpdate = prevProps => {
         if (prevProps.errors !== this.props.errors) {
             this.setState({ errors: this.props.errors });
         }

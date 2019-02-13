@@ -10,6 +10,7 @@ const apiController = {
     createProfile: profileData => axios.post('/api/profile', profileData),
     addExp: expData => axios.post('/api/profile/experience', expData),
     addEdu: eduData => axios.post('/api/profile/education', eduData),
+    addPost: postData => axios.post('/api/posts', postData),
     deleteProfile: () => axios.delete('/api/profile'),
     deleteExp: id => axios.delete(`/api/profile/experience/${id}`),
     deleteEdu: id => axios.delete(`/api/profile/education${id}`),

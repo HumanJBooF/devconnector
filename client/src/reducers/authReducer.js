@@ -3,10 +3,7 @@ import isEmpty from '../validation/is-empty';
 
 const { SET_CURRENT_USER } = types;
 
-const initialState = {
-    isAuthenticated: false,
-    user: {}
-}
+const initialState = { isAuthenticated: false, user: {} };
 
 const authState = (state = initialState, action) => {
     switch (action.type) {

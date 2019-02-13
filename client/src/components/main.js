@@ -8,8 +8,10 @@ import { AddExp, AddEdu } from './add-credentials/';
 import Dashboard from './dashboard/';
 import CreateProfile from './create-profile/';
 import EditProfile from './edit-profile/';
-import Profiles from './profiles';
-import Profile from './profile';
+import Posts from './posts/';
+import Profiles from './profiles/';
+import Profile from './profile/';
+import NotFound from './not-found/';
 import PrivateRoute from './common/PrivateRoute';
 import API from '../utils/api.controller';
 import store from '../store';
@@ -34,20 +36,20 @@ class Main extends React.Component {
         return (
             <div className="App">
                 <Navbar />
-                <Route exact path='/' component={Landing} />
-                <div className="container">
+                <Switch>
+                    <Route exact path='/' component={Landing} />
                     <Route exact path='/register' component={Register} />
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/profiles' component={Profiles} />
                     <Route exact path='/profile/:handle' component={Profile} />
-                    <Switch>
-                        <PrivateRoute exact path='/dashboard' component={Dashboard} />
-                        <PrivateRoute exact path='/create-profile' component={CreateProfile} />
-                        <PrivateRoute exact path='/edit-profile' component={EditProfile} />
-                        <PrivateRoute exact path='/add-experience' component={AddExp} />
-                        <PrivateRoute exact path='/add-education' component={AddEdu} />
-                    </Switch>
-                </div>
+                    <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                    <PrivateRoute exact path='/create-profile' component={CreateProfile} />
+                    <PrivateRoute exact path='/edit-profile' component={EditProfile} />
+                    <PrivateRoute exact path='/add-experience' component={AddExp} />
+                    <PrivateRoute exact path='/add-education' component={AddEdu} />
+                    <PrivateRoute exact path='/feed' component={Posts} />
+                    <Route component={NotFound} />
+                </Switch>
                 <Footer />
             </div>
         );
