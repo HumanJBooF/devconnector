@@ -2,6 +2,7 @@ const Profile = require('../models/Profile');
 const User = require('../models/User');
 const validate = require('../validation'); // Load validations
 const axios = require('axios');
+const keys = require('../config/keys');
 
 const ProfileController = {
     // @route GET /api/profile/
@@ -236,10 +237,10 @@ const ProfileController = {
     // @access Public if logged in
     getGithubRepos: (req, res) => {
         const { username } = req.params;
-        const { REACT_APP_GITHUB_CLIENT_ID, REACT_APP_GITHUB_CLIENT_SECRET } = process.env;
+        const { githubClientId, githubClientSecret } = keys;
         const count = 10;
         const sort = 'created: asc';
-        const query = `https://api.github.com/users/${username}/repos?per_page=${count}&sort=${sort}&client_id=${REACT_APP_GITHUB_CLIENT_ID}&client_secret=${REACT_APP_GITHUB_CLIENT_SECRET}`
+        const query = `https://api.github.com/users/${username}/repos?per_page=${count}&sort=${sort}&client_id=${githubClientId}&client_secret=${githubClientSecret}`
         axios.get(query)
             .then(data => res.json({ data: data.data }))
             .catch(err => res.json(err))
