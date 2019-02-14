@@ -68,7 +68,6 @@ const ProfileController = {
             } else profileFields.social[field] = '';
         })
 
-        console.log(profileFields)
         Profile.findOne({ user: profileFields.user })
             .then(profile => {
                 if (profile) {

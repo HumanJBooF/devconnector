@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -30,5 +30,9 @@ useJWT(passport);
 
 // Routes
 app.use('/', routes);
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+}
 
 app.listen(port, () => console.log(`Server running on port ${port}`))
