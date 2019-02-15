@@ -2,8 +2,8 @@ import types from '../actions/types';
 
 const { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_PROFILES } = types;
 const initialState = {
-    profile: null,
-    profiles: null,
+    profile: {},
+    profiles: {},
     loading: false
 };
 

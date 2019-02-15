@@ -25,7 +25,7 @@ class Profile extends React.Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            {!profile || loading
+                            {!Object.keys(profile).length || loading
                                 ? <Spinner />
                                 : (
                                     <div>
