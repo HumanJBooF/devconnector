@@ -17,8 +17,6 @@ class ProfileGithub extends React.Component {
 
     render () {
         const { repos } = this.state;
-        console.log(repos);
-
         return (
             <>
                 <h3 className="mt-2 mb-4 text-center">My Latest Repos</h3>
