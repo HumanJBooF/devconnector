@@ -42,7 +42,7 @@ class Profiles extends React.Component {
                             </p>
                             {!profiles || loading
                                 ? <Spinner />
-                                : (!Object.keys(profiles).length)
+                                : (!profiles)
                                     ? this.noProfiles()
                                     : profiles.map(profile =>
                                         <ProfileItem

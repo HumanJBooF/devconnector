@@ -50,14 +50,6 @@ class Dashboard extends React.Component {
             profile: { profile, loading },
             auth: { user }
         } = this.props;
-        let content;
-        if (!profile || loading) {
-            content = <Spinner />
-        } else {
-            (!Object.keys(profile).length)
-                ? content = this.createProfile(user)
-                : content = this.displayProfile(user, profile)
-        }
 
         return (
             <div className="dashboard">
@@ -67,7 +59,13 @@ class Dashboard extends React.Component {
                             <h1 className="display-4">
                                 Dashboard
                             </h1>
-                            {content}
+                            {(!profile || loading)
+                                ? <Spinner />
+                                :
+                                !profile
+                                    ? this.createProfile(user)
+                                    : this.displayProfile(user, profile)
+                            }
                         </div>
                     </div>
                 </div>
