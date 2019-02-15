@@ -23,7 +23,7 @@ class Post extends React.Component {
                             <Link to="/feed" className="btn btn-light mb-3">
                                 Back to Feed
                             </Link>
-                            {!post || loading
+                            {!post.length || loading
                                 ? <Spinner />
                                 : (
                                     <>
