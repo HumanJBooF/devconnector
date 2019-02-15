@@ -59,7 +59,7 @@ class Dashboard extends React.Component {
                             <h1 className="display-4">
                                 Dashboard
                             </h1>
-                            {(!profile || loading)
+                            {(profile === null || loading)
                                 ? <Spinner />
                                 :
                                 (profile === null)
