@@ -62,7 +62,7 @@ class Dashboard extends React.Component {
                             {(!Object.keys(profile).length || loading)
                                 ? <Spinner />
                                 :
-                                (!profile)
+                                (!Object.keys(profile).length)
                                     ? this.createProfile(user)
                                     : this.displayProfile(user, profile)
                             }
