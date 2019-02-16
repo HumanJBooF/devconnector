@@ -14,7 +14,7 @@ const profileState = (state = initialState, action) => {
         case GET_PROFILE:
             return { ...state, profile: action.payload, loading: false };
         case CLEAR_CURRENT_PROFILE:
-            return { ...state, profile: null }
+            return { ...state, profile: {} }
         case GET_PROFILES:
             return { ...state, profiles: action.payload, loading: false }
         default:

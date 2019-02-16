@@ -30,7 +30,7 @@ const getProfileByHandle = handle => dispatch => {
     dispatch(setProfileLoading());
     API.getProfileByHandle(handle)
         .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
-        .catch(err => dispatch({ type: GET_PROFILE, payload: null }));
+        .catch(err => dispatch({ type: GET_PROFILE, payload: {} }));
 }
 
 const createProfile = (profileData, history) => dispatch => {
