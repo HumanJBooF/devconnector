@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { deleteExp } from '../../actions/profileActions';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
+import Spinner from '../common/Spinner';
 
 class Experience extends React.Component {
 
@@ -25,26 +26,29 @@ class Experience extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {experience.map(exp =>
-                            <tr key={exp._id}>
-                                <td>{exp.company}</td>
-                                <td>{exp.title}</td>
-                                <td>
-                                    <Moment format="YYYY/MM/DD">{exp.from}</Moment> -{' '}
-                                    {
-                                        !exp.to
-                                            ? 'Current'
-                                            : <Moment format="YYYY/MM/DD">${exp.to}</Moment>
-                                    }
-                                </td>
-                                <td>{exp.description}</td>
-                                <td>
-                                    <button onClick={() => this.onDeleteClick(exp._id)} className="btn btn-danger">
-                                        Delete
+                        {!experience
+                            ? <Spinner />
+                            : experience.map(exp =>
+                                <tr key={exp._id}>
+                                    <td>{exp.company}</td>
+                                    <td>{exp.title}</td>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{exp.from}</Moment> -{' '}
+                                        {
+                                            !exp.to
+                                                ? 'Current'
+                                                : <Moment format="YYYY/MM/DD">${exp.to}</Moment>
+                                        }
+                                    </td>
+                                    <td>{exp.description}</td>
+                                    <td>
+                                        <button onClick={() => this.onDeleteClick(exp._id)} className="btn btn-danger">
+                                            Delete
                                     </button>
-                                </td>
-                            </tr>
-                        )}
+                                    </td>
+                                </tr>
+                            )
+                        }
                     </tbody>
                 </table>
             </div>
