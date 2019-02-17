@@ -1,6 +1,5 @@
-module.exports = {
-    mongoURI: process.env.MONGOURI,
-    secretOrKey: process.env.SECRET,
-    githubClientId: process.env.REACT_APP_GITHUB_CLIENT_ID,
-    githubClientSecret: process.env.REACT_APP_GITHUB_CLIENT_SECRET
+if (process.env.NODE_ENV === 'production') {
+    module.exports = require('./keys_prod');
+} else {
+    module.exports = require('./keys_dev');
 }

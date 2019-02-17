@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { deleteEdu } from '../../actions/profileActions';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
+import Spinner from '../common/Spinner';
 
 class Education extends React.Component {
 
@@ -26,27 +27,29 @@ class Education extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {education.map(edu =>
-                            <tr key={edu._id}>
-                                <td>{edu.school}</td>
-                                <td>{edu.degree}</td>
-                                <td>{edu.studied}</td>
-                                <td>
-                                    <Moment format="YYYY/MM/DD">{edu.from}</Moment> -{' '}
-                                    {
-                                        !edu.to
-                                            ? 'Current'
-                                            : <Moment format="YYYY/MM/DD">{edu.to}</Moment>
-                                    }
-                                </td>
-                                <td>{edu.description}</td>
-                                <td>
-                                    <button onClick={() => this.onDeleteClick(edu._id)} className="btn btn-danger">
-                                        Delete
+                        {!education
+                            ? <Spinner />
+                            : education.map(edu =>
+                                <tr key={edu._id}>
+                                    <td>{edu.school}</td>
+                                    <td>{edu.degree}</td>
+                                    <td>{edu.studied}</td>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{edu.from}</Moment> -{' '}
+                                        {
+                                            !edu.to
+                                                ? 'Current'
+                                                : <Moment format="YYYY/MM/DD">{edu.to}</Moment>
+                                        }
+                                    </td>
+                                    <td>{edu.description}</td>
+                                    <td>
+                                        <button onClick={() => this.onDeleteClick(edu._id)} className="btn btn-danger">
+                                            Delete
                                     </button>
-                                </td>
-                            </tr>
-                        )}
+                                    </td>
+                                </tr>
+                            )}
                     </tbody>
                 </table>
             </div>
