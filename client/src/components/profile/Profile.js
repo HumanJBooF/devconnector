@@ -18,7 +18,7 @@ class Profile extends React.Component {
     }
 
     render () {
-        const { profile: { profile, loading } } = this.props;
+        const { profile: { profile, loading }, auth: { user } } = this.props;
 
         return (
             <div className="profile">
@@ -40,8 +40,8 @@ class Profile extends React.Component {
                                         <ProfileHeader profile={profile} />
                                         <ProfileAbout profile={profile} />
                                         <ProfileCreds
-                                            education={profile.education}
-                                            experience={profile.experience}
+                                            profile={profile}
+                                            user={user}
                                         />
                                         {profile.github
                                             ? <ProfileGithub username={profile.github} />
@@ -65,7 +65,8 @@ Profile.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    profile: state.profile
+    profile: state.profile,
+    auth: state.auth
 })
 
 export default connect(mapStateToProps, { getProfileByHandle })(Profile);
