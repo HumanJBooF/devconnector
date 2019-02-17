@@ -59,11 +59,11 @@ class Dashboard extends React.Component {
                             <h1 className="display-4">
                                 Dashboard
                             </h1>
-                            {(!profile || loading)
+                            {(profile === null || loading)
                                 ? <Spinner />
-                                : (!Object.keys(profile).length > 0)
-                                    ? this.createProfile(user)
-                                    : this.displayProfile(user, profile)
+                                : (Object.keys(profile).length > 0)
+                                    ? this.displayProfile(user, profile)
+                                    : this.createProfile(user)
                             }
                         </div>
                     </div>

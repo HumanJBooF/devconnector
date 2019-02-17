@@ -19,7 +19,7 @@ class Posts extends React.Component {
                     <div className="row">
                         <div className="col-md-12">
                             <PostForm />
-                            {!posts || loading
+                            {posts === null || loading
                                 ? <Spinner />
                                 : <PostFeed posts={posts} />
                             }

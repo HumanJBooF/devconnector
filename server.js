@@ -30,6 +30,9 @@ app.use(passport.initialize());
 const useJWT = require('./config/passport');
 useJWT(passport);
 
+// Routes
+app.use('/', routes);
+
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
@@ -37,11 +40,9 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
 
-// Routes
-app.use('/', routes);
 
 app.listen(port, () => console.log(`Server running on port ${port}`))
