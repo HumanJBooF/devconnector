@@ -12,32 +12,46 @@ const {
     GET_PROFILES,
     CLEAR_ERRORS } = types;
 
-const getCurrentProfile = () => dispatch => {
-    dispatch(setProfileLoading());
-    API.getCurrentProfile()
-        .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
-        .catch(err => dispatch({ type: GET_PROFILE, payload: {} }));
+const getCurrentProfile = () => async dispatch => {
+    try {
+        dispatch(setProfileLoading());
+        const { data } = await API.getCurrentProfile();
+        dispatch({ type: GET_PROFILE, payload: data })
+    } catch (err) {
+        dispatch({ type: GET_PROFILE, payload: {} })
+    }
 }
 
-const getProfiles = () => dispatch => {
-    dispatch(setProfileLoading());
-    API.getAllProfiles()
-        .then(res => dispatch({ type: GET_PROFILES, payload: res.data }))
-        .catch(err => dispatch({ type: GET_PROFILES, payload: {} }));
+const getProfiles = () => async dispatch => {
+    try {
+        dispatch(setProfileLoading());
+        const { data } = await API.getAllProfiles();
+        dispatch({ type: GET_PROFILES, payload: data })
+    } catch (err) {
+        dispatch({ type: GET_PROFILES, payload: {} })
+    }
 }
 
-const getProfileByHandle = handle => dispatch => {
-    dispatch(setProfileLoading());
-    API.getProfileByHandle(handle)
-        .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
-        .catch(err => dispatch({ type: GET_PROFILE, payload: {} }));
+const getProfileByHandle = handle => async dispatch => {
+    try {
+        dispatch(setProfileLoading());
+        const { data } = await API.getProfileByHandle(handle);
+        dispatch({ type: GET_PROFILE, payload: data });
+    } catch (err) {
+        dispatch({ type: GET_PROFILE, payload: {} });
+    }
 }
 
-const createProfile = (profileData, history) => dispatch => {
-    dispatch(clearErrors());
-    API.createProfile(profileData)
-        .then(res => history.push('/dashboard'))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+const createProfile = (profileData, history) => async dispatch => {
+    try {
+        dispatch(clearErrors());
+        const res = await API.createProfile(profileData);
+        if (res) {
+            history.push('/dashboard')
+        }
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data })
+    }
 }
 
 const setProfileLoading = () => {
@@ -52,21 +66,31 @@ const clearErrors = () => {
     return { type: CLEAR_ERRORS }
 }
 
-const addExp = (expData, history) => dispatch => {
-    dispatch(clearErrors());
-    API.addExp(expData)
-        .then(res => history.push('/dashboard'))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+const addExp = (expData, history) => async dispatch => {
+    try {
+        dispatch(clearErrors());
+        const res = await API.addExp(expData);
+        if (res) {
+            history.push('/dashboard');
+        }
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data });
+    }
 }
 
-const addEdu = (eduData, history) => dispatch => {
-    dispatch(clearErrors());
-    API.addEdu(eduData)
-        .then(res => history.push('/dashboard'))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+const addEdu = (eduData, history) => async dispatch => {
+    try {
+        dispatch(clearErrors());
+        const res = await API.addEdu(eduData);
+        if (res) {
+            history.push('/dashboard');
+        }
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data });
+    }
 }
 
-const deleteAccount = () => dispatch => {
+const deleteAccount = () => async dispatch => {
     // Sweet Alert to confirm
     const deleteAlert = withReactContent(Swal);
     deleteAlert.fire({
@@ -85,14 +109,19 @@ const deleteAccount = () => dispatch => {
                 'Your profile has been deleted.',
                 'success'
             )
-            API.deleteProfile()
-                .then(res => dispatch(logoutUser()))
-                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+            try {
+                const res = await API.deleteProfile();
+                if (res) {
+                    dispatch(logoutUser())
+                }
+            } catch (err) {
+                dispatch({ type: GET_ERRORS, payload: err.response.data })
+            }
         }
     })
 }
 
-const deleteExp = id => dispatch => {
+const deleteExp = id => async dispatch => {
     // Sweet Alert to confirm
     const deleteAlert = withReactContent(Swal);
     deleteAlert.fire({
@@ -111,13 +140,16 @@ const deleteExp = id => dispatch => {
                 'This experience has been deleted.',
                 'success'
             )
-            API.deleteExp(id)
-                .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
-                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+            try {
+                const { data } = await API.deleteExp(id);
+                dispatch({ type: GET_PROFILE, payload: data });
+            } catch (err) {
+                dispatch({ type: GET_ERRORS, payload: err.response.data });
+            }
         }
     })
 }
-const deleteEdu = id => dispatch => {
+const deleteEdu = id => async dispatch => {
     // Sweet Alert to confirm
     const deleteAlert = withReactContent(Swal);
     deleteAlert.fire({
@@ -135,10 +167,13 @@ const deleteEdu = id => dispatch => {
                 'Deleted!',
                 'This experience has been deleted.',
                 'success'
-            )
-            API.deleteEdu(id)
-                .then(res => dispatch({ type: GET_PROFILE, payload: res.data }))
-                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+            );
+            try {
+                const { data } = await API.deleteEdu(id);
+                dispatch({ type: GET_PROFILE, payload: data })
+            } catch (err) {
+                dispatch({ type: GET_ERRORS, payload: err.response.data })
+            }
         }
     })
 }

@@ -9,57 +9,83 @@ const {
     DELETE_POST,
     LIKE_POST,
     DELETE_COMMENT,
-    CLEAR_ERRORS } = types;
+    CLEAR_ERRORS
+} = types;
 
-const addPost = postData => dispatch => {
-    dispatch(clearErrors());
-    API.addPost(postData)
-        .then(res => dispatch({ type: ADD_POST, payload: res.data }))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+const addPost = postData => async dispatch => {
+    try {
+        dispatch(clearErrors());
+        const res = await API.addPost(postData);
+        dispatch({ type: ADD_POST, payload: res.data })
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data })
+    }
 }
 
-const getPosts = () => dispatch => {
-    dispatch(setPostLoading);
-    API.getPosts()
-        .then(res => dispatch({ type: GET_POSTS, payload: res.data }))
-        .catch(err => dispatch({ type: GET_POSTS, payload: null }))
+const getPosts = () => async dispatch => {
+    try {
+        dispatch(setPostLoading);
+        const res = await API.getPosts();
+        dispatch({ type: GET_POSTS, payload: res.data })
+    } catch (err) {
+        dispatch({ type: GET_POSTS, payload: null })
+    }
 }
 
-const getPost = id => dispatch => {
-    API.getPost(id)
-        .then(res => dispatch({ type: GET_POST, payload: res.data }))
-        .catch(err => dispatch({ type: GET_POST, payload: null }))
+const getPost = id => async dispatch => {
+    try {
+        const res = await API.getPost(id);
+        dispatch({ type: GET_POST, payload: res.data })
+    } catch (err) {
+        dispatch({ type: GET_POST, payload: null })
+
+    }
 }
 
-const deletePost = id => dispatch => {
-    API.deletePost(id)
-        .then(res => dispatch({ type: DELETE_POST, payload: id }))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+const deletePost = id => async dispatch => {
+    try {
+        await API.deletePost(id);
+        dispatch({ type: DELETE_POST, payload: id });
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data });
+    }
 }
 
-const deleteComment = (postId, commentId) => dispatch => {
-    API.deleteComment(postId, commentId)
-        .then(res => dispatch({ type: DELETE_COMMENT, payload: commentId }))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+const deleteComment = (postId, commentId) => async dispatch => {
+    try {
+        await API.deleteComment(postId, commentId)
+        dispatch({ type: DELETE_COMMENT, payload: commentId });
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data });
+    }
 }
 
-const addLike = id => dispatch => {
-    API.addLike(id)
-        .then(res => dispatch({ type: LIKE_POST, payload: res.data }))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+const addLike = id => async dispatch => {
+    try {
+        const res = await API.addLike(id);
+        dispatch({ type: LIKE_POST, payload: res.data })
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data })
+    }
 }
 
-const addComment = (postId, commentData) => dispatch => {
-    dispatch(clearErrors());
-    API.addComment(postId, commentData)
-        .then(res => dispatch({ type: GET_POST, payload: res.data }))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+const addComment = (postId, commentData) => async dispatch => {
+    try {
+        dispatch(clearErrors());
+        const res = API.addComment(postId, commentData);
+        dispatch({ type: GET_POST, payload: res.data })
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data })
+    }
 }
 
-const removeLike = id => dispatch => {
-    API.removeLike(id)
-        .then(res => dispatch({ type: LIKE_POST, payload: res.data }))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+const removeLike = id => async dispatch => {
+    try {
+        const res = await API.removeLike(id);
+        dispatch({ type: LIKE_POST, payload: res.data })
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data })
+    }
 }
 
 const setPostLoading = () => {
