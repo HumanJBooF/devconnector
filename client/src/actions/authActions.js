@@ -5,26 +5,33 @@ import jwt_decode from 'jwt-decode';
 
 const { GET_ERRORS, SET_CURRENT_USER, CLEAR_ERRORS } = types;
 
-const registerUser = (userData, history) => dispatch => {
-    dispatch(clearErrors())
-    API.registerUser(userData)
-        .then(res => history.push('/login'))
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+const registerUser = (userData, history) => async dispatch => {
+    try {
+        dispatch(clearErrors());
+        const res = await API.registerUser(userData);
+        if (res) {
+            history.push('/login');
+        }
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data })
+    }
 }
 
-const loginUser = userData => dispatch => {
-    dispatch(clearErrors())
-    API.loginUser(userData)
-        .then(res => {
+const loginUser = userData => async dispatch => {
+    try {
+        dispatch(clearErrors());
+        const res = await API.loginUser(userData);
+        if (res) {
             const { token } = res.data;
-            // Save to localStorage
+            // Save to localStorage            
             localStorage.setItem('jwtToken', token);
-            API.setAuthToken(token);
+            await API.setAuthToken(token);
             const decoded = jwt_decode(token);
-
             dispatch(setCurrentUser(decoded));
-        })
-        .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+        }
+    } catch (err) {
+        dispatch({ type: GET_ERRORS, payload: err.response.data })
+    }
 }
 
 const setCurrentUser = decoded => {
@@ -34,9 +41,9 @@ const setCurrentUser = decoded => {
     };
 }
 
-const logoutUser = () => dispatch => {
+const logoutUser = () => async dispatch => {
     localStorage.removeItem('jwtToken');
-    API.setAuthToken(false);
+    await API.setAuthToken(false);
     dispatch(setCurrentUser({}));
 }
 
