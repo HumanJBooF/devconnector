@@ -90,7 +90,7 @@ const addEdu = (eduData, history) => async dispatch => {
     }
 }
 
-const deleteAccount = () => async dispatch => {
+const deleteAccount = () => dispatch => {
     // Sweet Alert to confirm
     const deleteAlert = withReactContent(Swal);
     deleteAlert.fire({
@@ -109,19 +109,14 @@ const deleteAccount = () => async dispatch => {
                 'Your profile has been deleted.',
                 'success'
             )
-            try {
-                const res = await API.deleteProfile();
-                if (res) {
-                    dispatch(logoutUser())
-                }
-            } catch (err) {
-                dispatch({ type: GET_ERRORS, payload: err.response.data })
-            }
+            API.deleteProfile()
+                .then(() => dispatch(logoutUser()))
+                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
         }
     })
 }
 
-const deleteExp = id => async dispatch => {
+const deleteExp = id => dispatch => {
     // Sweet Alert to confirm
     const deleteAlert = withReactContent(Swal);
     deleteAlert.fire({
@@ -140,16 +135,13 @@ const deleteExp = id => async dispatch => {
                 'This experience has been deleted.',
                 'success'
             )
-            try {
-                const { data } = await API.deleteExp(id);
-                dispatch({ type: GET_PROFILE, payload: data });
-            } catch (err) {
-                dispatch({ type: GET_ERRORS, payload: err.response.data });
-            }
+            API.deleteExp(id)
+                .then(({ data }) => dispatch({ type: GET_PROFILE, payload: data }))
+                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
         }
     })
 }
-const deleteEdu = id => async dispatch => {
+const deleteEdu = id => dispatch => {
     // Sweet Alert to confirm
     const deleteAlert = withReactContent(Swal);
     deleteAlert.fire({
@@ -168,12 +160,9 @@ const deleteEdu = id => async dispatch => {
                 'This experience has been deleted.',
                 'success'
             );
-            try {
-                const { data } = await API.deleteEdu(id);
-                dispatch({ type: GET_PROFILE, payload: data })
-            } catch (err) {
-                dispatch({ type: GET_ERRORS, payload: err.response.data })
-            }
+            API.deleteEdu(id)
+                .then(({ data }) => dispatch({ type: GET_PROFILE, payload: data }))
+                .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
         }
     })
 }
